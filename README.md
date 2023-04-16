@@ -1,38 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Event website
 
-## Getting Started
+Энэ repo event-ийн web-ны кодын агуулна.
 
-First, run the development server:
+## Эхлэх (Орчин)
+1. Git
+2. Node
+3. Yarn See [Yarn website for installation instructions](https://yarnpkg.com/lang/en/docs/install/) 
+4. Энэ repo-г fork хийнэ.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Git configuration
+  #### `Origin нэмэх === өөрийн local git-ийг нэмэх`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    - git add remote origin гээд өөрийн repo-гийнхоо url-ийн оруулна. Жишээ: `git add remote add origin https://github.com/bilg08/event-web.git`
+  #### `Upstream нэмэх ===  main кодны git-ийг нэмэх`
+    - git add remote upsteam гээд repo-ны url-ийн оруулна . Жишээ: `git add remote add upsteam https://github.com/PineconeLeap3DemoDay/event-web.git`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Ажилуулах
+1. `yarn dev`
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Create a branch
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+1.  өөрийн local `event-admin` repository-гоос `git checkout main` коммандыг хийн main branch руугаа шилжинэ
+2. `git pull origin main` хамгийн сүүлийн өөрчлөлтийн авах өөрийн local main branch-руугаа татаж авна
+3. `git checkout -b the-name-of-my-branch` (`the-name-of-my-branch` 
+    ийг өөрийн хүссэн нэрэээрээ солиж болно) коммандыг хийн branch үүсгэнэ
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Push хийх
+1. `git add . эсвэл git add changedfile.js`
+2. `yarn commit дэлгэрэнгүй юу өөрчилсөнөө бичнэ"`
+3. `git push -u origin the name-of-my-branch`
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
