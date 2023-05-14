@@ -1,39 +1,20 @@
+import { useChangesNavbarSearch } from "@/context";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { Dispatch, SetStateAction, useState } from "react";
+
+interface ChangeTypes {
+  show: boolean;
+  navbar: boolean;
+  setShow: Dispatch<SetStateAction<boolean>>;
+  setNavbar: Dispatch<SetStateAction<boolean>>;
+}
 
 export const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
-  const [show, setShow] = useState(false);
-  const [navbar, setNavbar] = useState(false);
+  const { show, navbar, setShow, setNavbar } = useChangesNavbarSearch() as ChangeTypes;
 
-  const changeBackground = () => {
-    if (window.pageYOffset >= 20) {
-      setNavbar((p) => (p = true));
-    } else {
-      setNavbar((p) => (p = false));
-    }
-  };
-
-  // hide navigation bar functionality
-  useEffect(() => {
-    let lastScrollY = window.pageYOffset;
-
-    const updateScroll = () => {
-      const scrollY = window.pageYOffset;
-      if (lastScrollY > scrollY) {
-        setShow(false);
-      } else {
-        setShow(true);
-      }
-      lastScrollY = scrollY;
-    };
-    window.addEventListener("scroll", updateScroll); // add event listener
-    window.addEventListener("scroll", changeBackground);
-    return () => {
-      window.removeEventListener("scroll", updateScroll); // clean up
-      window.removeEventListener("scroll", changeBackground);
-    };
-  }, [show]);
+  const router = useRouter();
 
   return (
     <div
@@ -42,18 +23,18 @@ export const Navbar = () => {
       }`}
     >
       <div
-        className="h-full max-w-[1920px] w-full px-[60px] m-auto flex flex-row justify-between items-center text-[#fff] relative 
+        className="h-full max-w-[1920px] w-full px-[60px] m-auto flexrow justify-between items-center text-[#fff] relative 
        max-[1600px]:px-[45px] max-[600px]:px-[30px]"
       >
         {/* left logo */}
         <button
           onClick={() => {
-            console.log("hello");
+            router.push("/");
           }}
         >
           <h1 className="text-[24px] font-['Roboto'] max-[1600px]:text-[18px]">UB EVENTS</h1>
         </button>
-        {/* right profile avatar */}
+        {/* __________________ right menu section __________________ */}
         <button
           className="flex items-center gap-[10px] justify-center max-[1600px]:gap-[5px] max-[600px]:hidden"
           onClick={() => setDropDown((p) => !p)}
@@ -81,12 +62,12 @@ export const Navbar = () => {
           <Image alt="hamburger menu icon" width={30} height={30} src="/otherIcons/hamburgerMenu.svg" className="w-[30px] h-[30px]" />
         </button>
         <div
-          className={`flex flex-col w-[245px] p-[20px]  absolute right-[25px] duration-[0.3s] z-[-1] rounded-[8px] box-border 
+          className={`flexcol w-[245px] p-[20px]  absolute right-[25px] duration-[0.3s] z-[-1] rounded-[8px] box-border 
           ${navbar && "bg-[#0A000B]"} ${dropDown ? "top-[60px] opacity-100" : "top-[0] opacity-0"} `}
         >
           {["Хадгалсан", "Тасалбар", "Календар", "Тохиргоо"].map((el, i) => {
             return (
-              <div key={i} className={`flex flex-row h-[45px] items-center px-[10px] justify-between `}>
+              <div key={i} className={`flexrow h-[45px] items-center px-[10px] justify-between `}>
                 <h2>{el}</h2>
                 <Image
                   src="/otherIcons/navbar-arrowDown.svg"
