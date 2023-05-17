@@ -1,8 +1,8 @@
 export const specialEventCarts = [
   {
     title: "FUTURE ISLANDS",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/poster1.jpeg",
     detail: 
@@ -18,8 +18,8 @@ export const specialEventCarts = [
   },
   {
     title: "TELL ME I’M ALIVE ON TOUR",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/poster2.jpeg",
     detail: 
@@ -37,8 +37,8 @@ export const specialEventCarts = [
   },
   {
     title: "LIKE A RIVER",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/poster3.jpeg",
     detail: 
@@ -54,8 +54,8 @@ export const specialEventCarts = [
   },
   {
     title: "MR. BUNGLE: GEEK SHOW 2023",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/poster4.jpeg",
     detail: 
@@ -74,8 +74,8 @@ export const specialEventCarts = [
 export const bigEventCarts = [
   {
     title: "THE FUTURE IS BRIGTH TOUR",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/bigPoster1.jpeg",
     id: 4,
@@ -92,8 +92,8 @@ export const bigEventCarts = [
   },
   {
     title: "THE UNION",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/bigPoster2.jpeg",
     id: 5,
@@ -110,8 +110,8 @@ export const bigEventCarts = [
   },
   {
     title: "THE MARS VOLTA NORTH AMERICA",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/bigPoster3.jpeg",
     id: 6,
@@ -128,8 +128,8 @@ export const bigEventCarts = [
   },
   {
     title: "WOLFMOTHER",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/bigPoster4.jpeg",
     id: 7,
@@ -146,8 +146,8 @@ export const bigEventCarts = [
   },
   {
     title: "HURRAY FOR THE RIFF AND RAFF",
-    location: "Ulaanbaatar, Mongolia",
-    mount: "MAY",
+    location: "улаанбаатар, Монголиа",
+    mount: "5сар",
     day: "19",
     img: "/images/bigPoster5.jpeg",
     id: 8,

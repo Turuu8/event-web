@@ -15,19 +15,19 @@ export default function Home() {
       />
       <div className="pt-[165px] max-w-[1920px] w-full m-auto px-[60px] max-[1600px]:px-[45px] max-[1600px]:pt-[125px]">
         <SearchInput set={setSearch} />
-        <div className={`pt-[80px] text-[#fff] max-[1600px]:pt-[55px] duration-[0.3s] ${search ? "translate-y-[100%] opacity-0 hidden" : ""}`}>
-          <h1 className="font-[400] text-[24px] pb-[80px] capitalize max-[1600px]:text-[18px] max-[1600px]:pb-[55px]">онцлох эвэнт</h1>
+        <div className={`pt-[100px] text-[#fff] max-[1600px]:pt-[65px] duration-[0.3s] ${search ? "hidden" : ""}`}>
+          <h1 className="font-[400] text-[24px] pb-[60px] capitalize max-[1600px]:text-[18px] max-[1600px]:pb-[35px]">онцлох эвэнт</h1>
           <div className="grid grid-cols-4 grid-rows-1 gap-[24px] max-[1600px]:gap-[16px]">
             {specialEventCarts.map((el, i) => {
               return <SpecialEventCart key={i} {...el} id={i} />;
             })}
           </div>
         </div>
-        <div id="comming" className={`pt-[125px] max-[1600px]:pt-[85px]duration-[0.3s] ${search ? "mt-[60vh] hidden" : ""}`}>
+        <div id="comming" className={`pt-[125px] max-[1600px]:pt-[85px] duration-[0.3s] ${search ? "mt-[60vh] hidden" : ""}`}>
           <a href="#comming">
-            <h1 className="uppercase text-[#D22366] font-[400] text-[32px] w-full text-center max-[1600px]:text-[24px]">удахгүй болох эвэнт</h1>
+            <h1 className="uppercase text-[#D22366] font-[400] text-[32px] w-full max-[1600px]:text-[24px]">Таньд санал болгох</h1>
           </a>
-          <div className="flexcol pt-[125px] gap-[80px] max-[1600px]:pt-[90px]  max-[1600px]:gap-[60px]">
+          <div className="flexcol pt-[125px] gap-[80px] max-[1600px]:pt-[40px]  max-[1600px]:gap-[60px]">
             {bigEventCarts.map((el, i) => {
               return <BigEventCart key={i} {...el} />;
             })}
