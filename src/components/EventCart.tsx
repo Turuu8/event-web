@@ -48,7 +48,7 @@ export const BigEventCart = (props: { img: string; mount: string; day: string; l
       </div>
       <div className="flexcol justify-start gap-[24px] max-[1600px]:gap-[20px]">
         <button onClick={() => router.push(`/event/${props.id}`)}>
-          <h1 className="text-[40px] font-[400] underline underline-offset-[8px] decoration-[2.5px] leading-[48px] max-[1750px]:text-[30px] max-[1600px]:text-[28px] max-[1600px]:leading-[30px]">
+          <h1 className="text-[32px] font-[400] underline underline-offset-[8px] decoration-[2.5px] leading-[48px] max-[1750px]:text-[30px] max-[1600px]:text-[28px] max-[1600px]:leading-[30px]">
             {props.title}
           </h1>
         </button>

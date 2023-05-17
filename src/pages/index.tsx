@@ -1,11 +1,16 @@
 import { BigEventCart, SpecialEventCart } from "@/components/EventCart";
 import { useChangesNavbarSearch } from "@/context";
+import { GET_CATEGORIES, GET_EVENT, GET_EVENTS } from "@/graphql";
 import { bigEventCarts, specialEventCarts } from "@/utils";
+import { useQuery } from "@apollo/client";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 
 export default function Home() {
   const { search, setSearch } = useChangesNavbarSearch() as { search: boolean; setSearch: Dispatch<SetStateAction<boolean>> };
+  const { loading, error, data } = useQuery(GET_EVENTS);
+  console.log(data);
+
   return (
     <main className={`w-full font-['Inter'] relative duration-[0.3s] ${search ? "bg-[#000]" : ""}`}>
       <div
@@ -25,9 +30,9 @@ export default function Home() {
         </div>
         <div id="comming" className={`pt-[125px] max-[1600px]:pt-[85px] duration-[0.3s] ${search ? "mt-[60vh] hidden" : ""}`}>
           <a href="#comming">
-            <h1 className="uppercase text-[#D22366] font-[400] text-[32px] w-full max-[1600px]:text-[24px]">Таньд санал болгох</h1>
+            <h1 className="uppercase text-[#D22366] font-[300] text-[32px] w-full max-[1600px]:text-[24px]">Таньд санал болгох</h1>
           </a>
-          <div className="flexcol pt-[125px] gap-[80px] max-[1600px]:pt-[40px]  max-[1600px]:gap-[60px]">
+          <div className="flexcol pt-[80px] gap-[80px] max-[1600px]:pt-[40px]  max-[1600px]:gap-[60px]">
             {bigEventCarts.map((el, i) => {
               return <BigEventCart key={i} {...el} />;
             })}
