@@ -6,13 +6,14 @@ import { Dispatch, SetStateAction, useState } from "react";
 interface ChangeTypes {
   show: boolean;
   navbar: boolean;
+  setSearch: Dispatch<SetStateAction<boolean>>;
   setShow: Dispatch<SetStateAction<boolean>>;
   setNavbar: Dispatch<SetStateAction<boolean>>;
 }
 
 export const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
-  const { show, navbar, setShow, setNavbar } = useChangesNavbarSearch() as ChangeTypes;
+  const { show, navbar, setSearch, setShow, setNavbar } = useChangesNavbarSearch() as ChangeTypes;
 
   const router = useRouter();
 
@@ -29,6 +30,7 @@ export const Navbar = () => {
         {/* left logo */}
         <button
           onClick={() => {
+            setSearch(false);
             router.push("/");
           }}
         >

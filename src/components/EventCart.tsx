@@ -16,7 +16,7 @@ export const SpecialEventCart = (props: { img: string; mount: string; day: strin
           <h2 className="text-[24px] text-center max-[1600px]:text-[18px] max-[1600px]:leading-[18px]">{props.day}</h2>
         </div>
       </div>
-      <p className="text-center w-full text-[20px] text-[#C7C9CF] pt-[24px] max-[1600px]:text-[15px] max-[1600px]:pt-[18px] max-[1600px]:pb-[5px]">
+      <p className="text-center w-full text-[20px] text-[#C7C9CF] pt-[24px] max-[1600px]:text-[15px] max-[1600px]:pt-[18px] max-[1600px]:pb-[5px] capitalize">
         {props.location}
       </p>
       <h3 className="text-center w-full text-[24px] max-[1600px]:text-[17px]">{props.title}</h3>
@@ -28,7 +28,7 @@ export const BigEventCart = (props: { img: string; mount: string; day: string; l
   const router = useRouter();
   return (
     <div className="flex font-[300] text-[#fff] gap-[32px] max-[1600px]:gap-[22px]">
-      <div className="relative w-[735px] h-[840px] max-[1600px]:w-[41%] max-[1600px]:h-[630px]">
+      <div className="relative w-[735px] h-[735px] max-[1600px]:w-[41%] max-[1600px]:h-[565px]">
         <Image
           width={1000}
           height={1000}
@@ -38,11 +38,11 @@ export const BigEventCart = (props: { img: string; mount: string; day: string; l
           onClick={() => router.push(`/event/${props.id}`)}
         />
         <div
-          className="absolute right-[40px] top-[40px] w-[80px] h-[80px] bg-white text-[#000] rounded-[8px] flexcol justify-center
+          className="absolute right-[40px] top-[40px] w-[80px] h-[80px] bg-white text-[#000] rounded-[8px] flexcol justify-center font-[400]
         max-[1600px]:w-[60px] max-[1600px]:h-[60px] max-[1600px]:right-[30px] max-[1600px]:top-[30px]
         "
         >
-          <h3 className="text-[16px] text-center font-[400] max-[1600px]:text-[12px]">{props.mount}</h3>
+          <h3 className="text-[16px] text-center max-[1600px]:text-[12px]">{props.mount}</h3>
           <h2 className="text-[24px] text-center max-[1600px]:text-[18px] max-[1600px]:leading-[20px]">{props.day}</h2>
         </div>
       </div>
@@ -52,16 +52,16 @@ export const BigEventCart = (props: { img: string; mount: string; day: string; l
             {props.title}
           </h1>
         </button>
-        <p className="text-[24px] text-[#C7C9CF] text-left max-[1750px]:text-[20px] max-[1600px]:text-[16px]">{props.location}</p>
+        <p className="text-[24px] text-[#C7C9CF] text-left max-[1750px]:text-[20px] max-[1600px]:text-[16px] capitalize">{props.location}</p>
         <p className="text-[24px] font-[400] text-left max-[1750px]:text-[20px] max-[1600px]:text-[18px] max-[1600px]:leading-[18px]">
           {props.mount}, {props.day}
         </p>
         {/* view event buttom */}
         <button
-          className="flexrow items-center justify-center bg-[#12121F] rounded-[8px] h-[60px] w-[205px] gap-x-[10px] max-[1600px]:h-[45px] max-[1600px]:w-[155px]"
+          className="flexrow items-center justify-center bg-[#12121F] rounded-[8px] gap-x-[10px] h-[60px] w-[320px]  max-[1600px]:h-[45px] max-[1600px]:w-[255px]"
           onClick={() => router.push(`/event/${props.id}`)}
         >
-          <span className="text-[#686873] text-[18px] max-[1750px]:text-[16px]  max-[1600px]:text-[14px] uppercase">view event</span>
+          <span className="text-[#686873] text-[18px] max-[1750px]:text-[16px]  max-[1600px]:text-[14px] uppercase">Эвэнтийн дэлгэрэнгүй</span>
           <Image
             width={30}
             height={30}
