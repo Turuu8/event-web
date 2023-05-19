@@ -26,7 +26,7 @@ export const NavbarSearch = ({ children }: { children: ReactNode }) => {
         setShow(true);
       }
       lastScrollY = scrollY;
-      setNavbar(window.pageYOffset > 120);
+      setNavbar(window.pageYOffset > 40);
     };
     window.addEventListener("scroll", updateScroll); // add event listener
     return () => {

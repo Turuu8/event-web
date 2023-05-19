@@ -9,10 +9,9 @@ import { Dispatch, SetStateAction, useState } from "react";
 export default function Home() {
   const { search, setSearch } = useChangesNavbarSearch() as { search: boolean; setSearch: Dispatch<SetStateAction<boolean>> };
   const { loading, error, data } = useQuery(GET_EVENTS);
-  console.log(data);
 
   return (
-    <main className={`w-full font-['Inter'] relative duration-[0.3s] ${search ? "bg-[#000]" : ""}`}>
+    <main className={`w-full font-['Inter'] relative duration-[0.3s]  ${search ? "bg-[#000]" : ""}`}>
       <div
         className={`bg-[url('/images/homeBack.jpeg')] bg-no-repeat bg-cover w-full h-[115vh] z-[-1] absolute duration-[0.5s] ${
           search ? "opacity-0 h-[100vh]" : ""
