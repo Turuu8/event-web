@@ -1,7 +1,10 @@
-import { useChangesNavbarSearch } from "@/context";
+import { useAuthContext, useChangesNavbarSearch } from "@/context";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Login } from "../login/Login";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "@/graphql";
 
 interface ChangeTypes {
   show: boolean;
@@ -14,6 +17,25 @@ interface ChangeTypes {
 export const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
   const { show, navbar, setSearch, setShow, setNavbar } = useChangesNavbarSearch() as ChangeTypes;
+  const { userLogin, clickButton } = useAuthContext();
+  const { isUser } = userLogin;
+  const { setLoginButton } = clickButton;
+
+  // const { token } = useAuthContext();
+  // const { data } = useQuery(GET_USER, {
+  //   context: {
+  //     headers: {
+  //       authorization:
+  //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YXJpYW50IjoidXNlciIsImlkIjoiNjQ2NzJhYTI4ZDAwYjlhZWZiYWMyOTJjIiwiaWF0IjoxNjg0NDg3MTMwLCJleHAiOjE2ODQ0ODcxNDB9.Fwqn0iCOqIwmyQug2_TF_hXPQtsCgH_2J37ZcDFGnaI",
+  //     },
+  //   },
+  // });
+  // const { login } = useAuthContext();
+  // useEffect(() => {
+  //   (async () => {
+  //     await login("t@gmial.com", "12345678");
+  //   })();
+  // }, []);
 
   const router = useRouter();
 
@@ -25,31 +47,75 @@ export const Navbar = () => {
         <button onClick={() => router.push("/")} className="uppercase font-['Roboto'] font-[600]">
           <h1>UB EVENTS</h1>
         </button>
+        {/* hamburger */}
         <button
           onClick={() => {
-            setDropDown((p) => !p);
+            setDropDown(true);
             setNavbar(true);
           }}
         >
           <Image alt="hamburger menu icon" width={30} height={30} src="/otherIcons/hamburgerMenu.svg" className="w-[30px] h-[30px]" />
         </button>
       </header>
-      <div className={`fixed z-10 w-[100vw] h-[100vh] duration-[0.3s] translate-y-[-100%] px-[32px] bg-[#654848] ${dropDown && "translate-y-0 "}`}>
-        <>
+      <div
+        className={`fixed z-10 w-[100vw] h-[100vh] duration-[0.5s] translate-y-[-100%] px-[32px] bg-[#0A000B] ${dropDown && "translate-y-[0px] "}`}
+      >
+        {/* ___________ close navbar ___________*/}
+        <div className="h-[70px] flex justify-end w-full items-center">
           <button
-            className="flex items-center gap-[10px] justify-center max-[1600px]:gap-[5px] max-[600px]:hidden"
-            onClick={() => setDropDown((p) => !p)}
+            className="flex items-center gap-[10px] justify-center"
+            onClick={() => {
+              setDropDown(false);
+              setNavbar(false);
+            }}
           >
             <Image
-              src="https://images.unsplash.com/photo-1682424609336-9f71d1df4f30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2487&q=80"
+              src="/otherIcons/close.svg"
               width={40}
               height={40}
               alt="user avatar"
               className="rounded-[50%] w-[40px] h-[40px] max-[1600px]:w-[30px] max-[1600px]:h-[30px]"
             />
-            <h2 className="font-['Inter'] font-normal pl-[5px] text-[18px] max-[1600px]:text-[14px]">Doljinsuren</h2>
           </button>
-        </>
+        </div>
+        {/* ___________ name and profile image ___________*/}
+        {isUser ? (
+          <>
+            <div className="flexrow gap-[16px] items-center">
+              <div className="w-[35px] h-[35px]">
+                <Image
+                  alt="profile imgage"
+                  width={40}
+                  height={40}
+                  className="w-full h-full rounded-[50%]"
+                  src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80"
+                />
+              </div>
+              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">Doljinsuren</h2>
+            </div>
+            {/* ___________ other buttoms ___________*/}
+            <div className="flexcol pt-[55px] gap-[16px]">
+              {["Хадгалсан", "Тасалбар", "Календар", "Тохиргоо", "Эвэнт үүсгэх"].map((el, i) => {
+                return (
+                  <div key={i}>
+                    <button className={``} onClick={() => console.log(el)}>
+                      <h2 className="text-[18px] leading-[21px]">{el}</h2>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <button
+            onClick={() => {
+              setDropDown(false);
+              setLoginButton(() => true);
+            }}
+          >
+            <h1>Нэвтрэх</h1>
+          </button>
+        )}
       </div>
     </>
   );

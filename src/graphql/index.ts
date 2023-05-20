@@ -48,6 +48,9 @@ export const SIGN_IN = gql`
       token
       user {
         _id
+        firstName
+        lastName
+        email
       }
     }
   }

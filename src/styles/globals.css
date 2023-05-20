@@ -17,11 +17,15 @@ html {
   }
 }
 
-@layer base { 
+@layer base {
   body {
     background-color: #0a000b;
-  }  
-  h1 , h2 , h3 , p , span{
+  }
+  h1,
+  h2,
+  h3,
+  p,
+  span {
     @apply text-white;
   }
 }

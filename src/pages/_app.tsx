@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from "@apollo/client";
-import { Layout } from "@/components/layout/Layout";
 import type { AppProps } from "next/app";
 import "@/styles/globals.css";
+import { Layout } from "@/components";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
