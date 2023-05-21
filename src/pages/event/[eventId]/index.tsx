@@ -98,7 +98,7 @@ const EventDeatil = () => {
           <h1 className="font-[400] text-[24px] pb-[80px] capitalize max-[1600px]:text-[18px] max-[1600px]:pb-[55px]">онцлох эвэнт</h1>
           <div className="grid grid-cols-4 grid-rows-1 gap-[24px] max-[1600px]:gap-[16px]">
             {specialEventCarts.map((el, i) => {
-              return <SpecialEventCart key={i} {...el} id={i} />;
+              return <SpecialEventCart key={i} {...el} />;
             })}
           </div>
         </div>
