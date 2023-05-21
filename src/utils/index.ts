@@ -82,7 +82,7 @@ export const bigEventCarts = [
     mount: "5сар",
     day: "19",
     img: "/images/bigPoster1.jpeg",
-    id: 4,
+    id: "4",
     detail: {
       top: "The Union Event Center",
       time: "7:00 PM - 10:30 PM",
@@ -100,7 +100,7 @@ export const bigEventCarts = [
     mount: "5сар",
     day: "19",
     img: "/images/bigPoster2.jpeg",
-    id: 5,
+    id: "5",
     detail: {
       top: "The Union Event Center",
       time: "7:00 PM - 10:30 PM",
@@ -118,7 +118,7 @@ export const bigEventCarts = [
     mount: "5сар",
     day: "19",
     img: "/images/bigPoster3.jpeg",
-    id: 6,
+    id: "6",
     detail: {
       top: "The Union Event Center",
       time: "7:00 PM - 10:30 PM",
@@ -136,7 +136,7 @@ export const bigEventCarts = [
     mount: "5сар",
     day: "19",
     img: "/images/bigPoster4.jpeg",
-    id: 7,
+    id: "7",
     detail: {
       top: "The Union Event Center",
       time: "7:00 PM - 10:30 PM",
@@ -154,7 +154,7 @@ export const bigEventCarts = [
     mount: "5сар",
     day: "19",
     img: "/images/bigPoster5.jpeg",
-    id: 8,
+    id: "8",
     detail: {
       top: "The Union Event Center",
       time: "7:00 PM - 10:30 PM",
