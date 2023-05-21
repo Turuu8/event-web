@@ -5,17 +5,21 @@ import React, { useState } from "react";
 import Select, { StylesConfig } from "react-select";
 import { SpecialEventCart } from "../EventCart";
 
+const breakpoints = [640, 768, 1024];
+
+const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
 export const SearchInput = ({ set }: { set: any }) => {
   const [currentChoice, setCurrentChoice] = useState();
   const { search } = useChangesNavbarSearch() as { search: boolean };
 
   return (
     <div className="w-full">
-      <div className="w-full relative">
+      <div className="w-full relative ">
         <input
           type="search"
           placeholder="Хайх"
-          className="w-full bg-transparent h-[33px] pl-[42px] rounded-[8px] border-[0.5px] text-[14px] border-[#C7C9CF] text-[#fff] placeholder-[#C7C9CF] focus:outline-none"
+          className="w-full bg-transparent focus:outline-none h-[33px] pl-[42px] rounded-[8px] border-[0.5px] text-[14px] border-[#C7C9CF] text-[#fff] placeholder-[#C7C9CF] md:h-[40px] md:text-[16px]"
           onClick={() => set(true)}
           // onBlur={() => set(false)}
         />
@@ -32,6 +36,8 @@ export const SearchInput = ({ set }: { set: any }) => {
         <div>
           <div className="grid grid-cols-2 grid-rows-2 gap-[10px]">
             <Select
+              id="long-value-select"
+              instanceId="long-value-select"
               defaultValue={days[0]}
               options={days}
               styles={colourStyles}
@@ -40,6 +46,8 @@ export const SearchInput = ({ set }: { set: any }) => {
               }}
             />
             <Select
+              id="long-value-select"
+              instanceId="long-value-select"
               defaultValue={categories[0]}
               options={categories}
               styles={colourStyles}
@@ -48,6 +56,8 @@ export const SearchInput = ({ set }: { set: any }) => {
               }}
             />
             <Select
+              id="long-value-select"
+              instanceId="long-value-select"
               defaultValue={countries[0]}
               options={countries}
               styles={colourStyles}
@@ -56,6 +66,8 @@ export const SearchInput = ({ set }: { set: any }) => {
               }}
             />
             <Select
+              id="long-value-select"
+              instanceId="long-value-select"
               defaultValue={cities[0]}
               options={cities}
               styles={colourStyles}
@@ -122,9 +134,12 @@ const colourStyles: StylesConfig = {
     borderColor: isFocused ? "#D22366" : "#C7C9CF",
     boxShadow: "none",
     padding: 0,
-    height: "40px",
+    height: "33px",
     textTransform: "capitalize",
     color: isFocused ? "#fff" : "#C7C9CF",
+    [mq[0]]: {
+      height: "40px",
+    },
   }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     return {
@@ -141,6 +156,10 @@ const colourStyles: StylesConfig = {
     textTransform: "capitalize",
     fontSize: "12px",
     lineHeight: "14px",
+    [mq[1]]: {
+      fontSize: "14px",
+      lineHeight: "16px",
+    },
   }),
   dropdownIndicator: (styles, { isFocused }) => ({
     ...styles,
@@ -150,6 +169,10 @@ const colourStyles: StylesConfig = {
     ...styles,
     fontSize: "12px",
     lineHeight: "14px",
+    [mq[1]]: {
+      fontSize: "14px",
+      lineHeight: "16px",
+    },
     color: state.selectProps.changeInput,
   }),
 };
