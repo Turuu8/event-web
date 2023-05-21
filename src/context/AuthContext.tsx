@@ -1,36 +1,62 @@
-import { SIGN_IN } from "@/graphql";
+import { SIGN_IN, SIGN_UP } from "@/graphql";
 import { useMutation, useQuery } from "@apollo/client";
-import { validate } from "graphql";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 const Auth = createContext<any>(null);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState({ email: "", username: "", password: "" });
+  const [userInfo, setUserInfo] = useState<object | null>(null);
   const [isUser, setIsUser] = useState(false);
   const [loginButton, setLoginButton] = useState(false);
 
-  const [sigin, { data, loading, error }] = useMutation(SIGN_IN);
+  const [signinGQL, { data, loading, error }] = useMutation(SIGN_IN);
+  const [signupGQL] = useMutation(SIGN_UP);
 
-  // const login = async (email: string, password: string) => {
-  //   try {
-  //     await sigin({
-  //       variables: {
-  //         email,
-  //         password,
-  //       },
-  //       onCompleted: (data) => {
-  //         const res = data?.signin;
-  //         setToken(res.token);
-  //         localStorage.setItem("token", res.token);
-  //         setIsUser(true);
-  //       },
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const signIn = async (email: string, password: string) => {
+    try {
+      await signinGQL({
+        variables: {
+          email,
+          password,
+        },
+        onCompleted: (data) => {
+          if (data) {
+            const res = data.signin;
+            localStorage.setItem("token", res.token);
+            setToken(res.token);
+            setLoginButton(false);
+            setIsUser(true);
+            setUserInfo(data.signin.user);
+          }
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const signUp = async (email: string, firstName: string, lastName: string, password: string) => {
+    try {
+      await signupGQL({
+        variables: {
+          email,
+          firstName,
+          lastName,
+          password,
+        },
+        onCompleted: (data) => {
+          if (data) {
+            const res = data.signup;
+            localStorage.setItem("token", res.token);
+            console.log("success", res);
+          }
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // async function checkAuth() {
   //   const token = localStorage.getItem("token");
   //   if (token) {
@@ -47,6 +73,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const state = {
     userLogin: { isUser, setIsUser },
     clickButton: { loginButton, setLoginButton },
+    sign: { signIn, signUp },
+    data: { userInfo, setUserInfo },
   };
   return <Auth.Provider value={state}>{children}</Auth.Provider>;
 };

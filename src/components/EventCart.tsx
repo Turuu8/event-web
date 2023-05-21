@@ -1,8 +1,11 @@
+import { EVENT_TYPE } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export const SpecialEventCart = (props: { img: string; mount: string; day: string; location: string; title: string; id: number }) => {
+export const SpecialEventCart = (props: EVENT_TYPE) => {
   const router = useRouter();
+  console.log(props);
+
   return (
     <button className="flexcol font-[300]" onClick={() => router.push(`/event/${props.id}`)}>
       <div className="relative w-[435px] h-[435px] max-[1900px]:w-full max-[1850px]:h-[400px]  max-[1600px]:w-full max-[1600px]:h-[330px]">

@@ -1,6 +1,7 @@
 export const specialEventCarts = [
   {
     title: "FUTURE ISLANDS",
+    id: "0",
     location: "улаанбаатар, Монгол",
     mount: "5сар",
     day: "19",
@@ -18,6 +19,7 @@ export const specialEventCarts = [
   },
   {
     title: "TELL ME I’M ALIVE ON TOUR",
+    id: "1",
     location: "улаанбаатар, Монгол",
     mount: "5сар",
     day: "19",
@@ -37,6 +39,7 @@ export const specialEventCarts = [
   },
   {
     title: "LIKE A RIVER",
+    id: "2",
     location: "улаанбаатар, Монгол",
     mount: "5сар",
     day: "19",
@@ -54,6 +57,7 @@ export const specialEventCarts = [
   },
   {
     title: "MR. BUNGLE: GEEK SHOW 2023",
+    id: "3",
     location: "улаанбаатар, Монгол",
     mount: "5сар",
     day: "19",

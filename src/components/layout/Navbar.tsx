@@ -1,61 +1,80 @@
 import { useAuthContext, useChangesNavbarSearch } from "@/context";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Login } from "../login/Login";
-import { useQuery } from "@apollo/client";
-import { GET_USER } from "@/graphql";
-
-interface ChangeTypes {
-  show: boolean;
-  navbar: boolean;
-  setSearch: Dispatch<SetStateAction<boolean>>;
-  setShow: Dispatch<SetStateAction<boolean>>;
-  setNavbar: Dispatch<SetStateAction<boolean>>;
-}
+import { Dispatch, SetStateAction, useState } from "react";
 
 export const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
   const { show, navbar, setSearch, setShow, setNavbar } = useChangesNavbarSearch() as ChangeTypes;
-  const { userLogin, clickButton } = useAuthContext();
+  const { userLogin, clickButton, data } = useAuthContext();
   const { isUser } = userLogin;
   const { setLoginButton } = clickButton;
-
-  // const { token } = useAuthContext();
-  // const { data } = useQuery(GET_USER, {
-  //   context: {
-  //     headers: {
-  //       authorization:
-  //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YXJpYW50IjoidXNlciIsImlkIjoiNjQ2NzJhYTI4ZDAwYjlhZWZiYWMyOTJjIiwiaWF0IjoxNjg0NDg3MTMwLCJleHAiOjE2ODQ0ODcxNDB9.Fwqn0iCOqIwmyQug2_TF_hXPQtsCgH_2J37ZcDFGnaI",
-  //     },
-  //   },
-  // });
-  // const { login } = useAuthContext();
-  // useEffect(() => {
-  //   (async () => {
-  //     await login("t@gmial.com", "12345678");
-  //   })();
-  // }, []);
+  const { userInfo } = data;
 
   const router = useRouter();
 
   return (
     <>
       <header
-        className={`w-full flexrow justify-between items-center px-[32px] h-[70px] fixed top-0 z-10 duration-[0.3s] ${navbar && "bg-[#0A000B]"}`}
+        className={`w-full flexrow justify-between items-center fixed top-0 left-0 right-0 z-10 max-w-[1920px] m-auto px-[32px] h-[70px] duration-[0.3s] ${
+          navbar && "bg-[#0A000B]"
+        } ${show && "top-[-70px]"} lg:px-[60px] lg:h-[80px]`}
       >
-        <button onClick={() => router.push("/")} className="uppercase font-['Roboto'] font-[600]">
+        <button
+          onClick={() => {
+            router.push("/");
+            setSearch(false);
+          }}
+          className="uppercase font-['Roboto'] font-[600] lg:text-[24px] lg:leading-[28px] xl:text-[28px] xl:leading-[32px] "
+        >
           <h1>UB EVENTS</h1>
         </button>
         {/* hamburger */}
-        <button
-          onClick={() => {
-            setDropDown(true);
-            setNavbar(true);
-          }}
-        >
-          <Image alt="hamburger menu icon" width={30} height={30} src="/otherIcons/hamburgerMenu.svg" className="w-[30px] h-[30px]" />
-        </button>
+        <>
+          <button
+            onClick={() => {
+              setDropDown(true);
+              setNavbar(true);
+            }}
+            className="lg:hidden"
+          >
+            <Image alt="hamburger menu icon" width={30} height={30} src="/otherIcons/hamburgerMenu.svg" className="w-[30px] h-[30px]" />
+          </button>
+          {isUser ? (
+            <button onClick={() => setDropDown(true)} className="gap-[16px] items-center hidden lg:flexrow">
+              <div className="w-[35px] h-[35px]">
+                <Image
+                  alt="profile imgage"
+                  width={40}
+                  height={40}
+                  className="w-full h-full rounded-[50%]"
+                  src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80"
+                />
+              </div>
+              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo.email}</h2>
+              <Image
+                src="/otherIcons/navbar-arrowDown.svg"
+                width={30}
+                height={30}
+                alt="user avatar"
+                className={`w-[30px] h-[30px] duration-[0.3s] ml-[-5px] ${dropDown ? "rotate-[-180deg]" : "rotate-0"}
+              max-[1600px]:w-[20px] max-[1600px]:h-[20px]`}
+              />
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  setDropDown(false);
+                  setLoginButton(() => true);
+                }}
+                className="hidden lg:block xl:text-[18px]"
+              >
+                <h1>Нэвтрэх</h1>
+              </button>
+            </>
+          )}
+        </>
       </header>
       <div
         className={`fixed z-10 w-[100vw] h-[100vh] duration-[0.5s] translate-y-[-100%] px-[32px] bg-[#0A000B] ${dropDown && "translate-y-[0px] "}`}
@@ -91,7 +110,7 @@ export const Navbar = () => {
                   src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80"
                 />
               </div>
-              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">Doljinsuren</h2>
+              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo.email}</h2>
             </div>
             {/* ___________ other buttoms ___________*/}
             <div className="flexcol pt-[55px] gap-[16px]">
@@ -120,6 +139,14 @@ export const Navbar = () => {
     </>
   );
 };
+
+interface ChangeTypes {
+  show: boolean;
+  navbar: boolean;
+  setSearch: Dispatch<SetStateAction<boolean>>;
+  setShow: Dispatch<SetStateAction<boolean>>;
+  setNavbar: Dispatch<SetStateAction<boolean>>;
+}
 
 // export const Navbar = () => {
 //   const [dropDown, setDropDown] = useState(false);

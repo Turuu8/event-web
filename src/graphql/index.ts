@@ -55,6 +55,15 @@ export const SIGN_IN = gql`
     }
   }
 `;
+
+export const SIGN_UP = gql`
+  mutation Mutation($user: addUserInput!) {
+    signup(user: $user) {
+      token
+    }
+  }
+`;
+
 export const GET_FAVORITES = gql`
   query GetUser {
     getUser {
