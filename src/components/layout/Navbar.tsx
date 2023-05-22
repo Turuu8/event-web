@@ -16,65 +16,67 @@ export const Navbar = () => {
   return (
     <>
       <header
-        className={`w-full flexrow justify-between items-center fixed top-0 left-0 right-0 z-10 max-w-[1920px] m-auto px-[32px] h-[70px] duration-[0.3s] ${
-          navbar && "bg-[#0A000B]"
-        } ${show && "top-[-70px]"} lg:px-[45px] xl:h-[80px] 2xl:-[60px]`}
+        className={`w-full items-center fixed top-0 left-0 right-0 z-10 h-[70px] duration-[0.3s] ${navbar && "bg-[#0A000B]"} ${
+          show && "top-[-70px] xl:top-[-80px]"
+        } `}
       >
-        <button
-          onClick={() => {
-            router.push("/");
-            setSearch(false);
-          }}
-          className="uppercase font-['Roboto'] font-[600] lg:text-[24px] lg:leading-[28px]  2xl:text-[28px] 2xl:leading-[32px] "
-        >
-          <h1>UB EVENTS</h1>
-        </button>
-        {/* hamburger */}
-        <>
+        <div className="w-full h-full flexrow justify-between items-center max-w-[1920px] m-auto px-[32px] lg:px-[45px] xl:h-[80px] 2xl:px-[60px]">
           <button
             onClick={() => {
-              setDropDown(true);
-              setNavbar(true);
+              router.push("/");
+              setSearch(false);
             }}
-            className="lg:hidden"
+            className="uppercase font-['Roboto'] font-[600] lg:text-[24px] lg:leading-[28px]  2xl:text-[28px] 2xl:leading-[32px] "
           >
-            <Image alt="hamburger menu icon" width={30} height={30} src="/otherIcons/hamburgerMenu.svg" className="w-[30px] h-[30px]" />
+            <h1>UB EVENTS</h1>
           </button>
-          {isUser ? (
-            <button onClick={() => setDropDown(true)} className="gap-[16px] items-center hidden lg:flexrow">
-              <div className="w-[35px] h-[35px]">
-                <Image
-                  alt="profile imgage"
-                  width={40}
-                  height={40}
-                  className="w-full h-full rounded-[50%]"
-                  src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80"
-                />
-              </div>
-              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo.email}</h2>
-              <Image
-                src="/otherIcons/navbar-arrowDown.svg"
-                width={30}
-                height={30}
-                alt="user avatar"
-                className={`w-[30px] h-[30px] duration-[0.3s] ml-[-5px] ${dropDown ? "rotate-[-180deg]" : "rotate-0"}
-              max-[1600px]:w-[20px] max-[1600px]:h-[20px]`}
-              />
+          {/* hamburger */}
+          <>
+            <button
+              onClick={() => {
+                setDropDown(true);
+                setNavbar(true);
+              }}
+              className="lg:hidden"
+            >
+              <Image alt="hamburger menu icon" width={30} height={30} src="/otherIcons/hamburgerMenu.svg" className="w-[30px] h-[30px]" />
             </button>
-          ) : (
-            <>
-              <button
-                onClick={() => {
-                  setDropDown(false);
-                  setLoginButton(() => true);
-                }}
-                className="hidden lg:block xl:text-[18px]"
-              >
-                <h1>Нэвтрэх</h1>
+            {isUser ? (
+              <button onClick={() => setDropDown(true)} className="gap-[16px] items-center hidden lg:flexrow">
+                <div className="w-[35px] h-[35px]">
+                  <Image
+                    alt="profile imgage"
+                    width={40}
+                    height={40}
+                    className="w-full h-full rounded-[50%]"
+                    src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80"
+                  />
+                </div>
+                <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo.email}</h2>
+                <Image
+                  src="/otherIcons/navbar-arrowDown.svg"
+                  width={30}
+                  height={30}
+                  alt="user avatar"
+                  className={`w-[30px] h-[30px] duration-[0.3s] ml-[-5px] ${dropDown ? "rotate-[-180deg]" : "rotate-0"}
+              max-[1600px]:w-[20px] max-[1600px]:h-[20px]`}
+                />
               </button>
-            </>
-          )}
-        </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setDropDown(false);
+                    setLoginButton(() => true);
+                  }}
+                  className="hidden lg:block xl:text-[18px] 2xl:text-[21px]"
+                >
+                  <h1>Нэвтрэх</h1>
+                </button>
+              </>
+            )}
+          </>
+        </div>
       </header>
       <div
         className={`fixed z-10 w-[100vw] h-[100vh] duration-[0.5s] translate-y-[-100%] px-[32px] bg-[#0A000B] ${dropDown && "translate-y-[0px] "}`}

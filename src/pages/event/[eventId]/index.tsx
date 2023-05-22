@@ -16,10 +16,10 @@ const EventDeatil = () => {
 
   return (
     <main className="w-full font-['Inter']">
-      <div className="p-[125px_32px_0] max-w-[1920px] m-auto relative lg:px-[45px]">
+      <div className="p-[125px_32px_0] max-w-[1920px] m-auto relative lg:px-[45px] xl:pt-[180px]">
         <div className="flexrow">
           {/* back buttom */}
-          <div className="w-[25%] absolute left-[32px] top-125px lg:left-[60px]">
+          <div className="w-[25%] absolute left-[32px] top-125px lg:left-[45px]">
             <button className="items-center gap-[6px] lg:flexrow" onClick={() => router.push("/")}>
               <Image
                 alt="back arrow icon"
@@ -38,8 +38,8 @@ const EventDeatil = () => {
             {data && (
               <div className="flexcol w-full">
                 <div className="flexcol gap-[50px] lg:flexrow lg:ml-[25%] lg:gap-[24px]">
-                  <div className="flexcol items-center m-auto w-[160px] sm:w-[260px] lg:w-[323px] lg:m-0 xl:w-[380px]">
-                    <div className="w-full h-[190px] sm:h-[290px] lg:h-[432px] xl:h-[480px]">
+                  <div className="flexcol items-center m-auto w-[160px] sm:w-[260px] lg:w-[323px] lg:m-0 xl:w-[330px]">
+                    <div className="w-full h-[190px] sm:h-[290px] lg:h-[432px] xl:h-[420px]">
                       <Image alt="poster image" width={1000} height={1000} className="w-full h-full rounded-[8px]" src={data.img} />
                     </div>
                     {/* save and ticket buttoms */}
@@ -52,7 +52,7 @@ const EventDeatil = () => {
                       </h1>
                       <div className="flex justify-between w-full gap-[10px] lg:gap-[20px]">
                         <button
-                          className="w-[35px] h-[35px] min-w-[35px] rounded-[50%] bg-[#12121F] flex items-center justify-center lg:h-[56px] lg:min-w-[56px] lg:w-[56px]"
+                          className="w-[35px] h-[35px] min-w-[35px] rounded-[50%] bg-[#12121F] flex items-center justify-center lg:h-[45px] lg:min-w-[45px] lg:w-[45px]"
                           onClick={() => setSaved((p) => !p)}
                         >
                           <Image
@@ -60,10 +60,10 @@ const EventDeatil = () => {
                             width={40}
                             height={40}
                             src={saved ? "/otherIcons/saved.svg" : "/otherIcons/save.svg"}
-                            className={`w-[18px] h-[18px] lg:w-[25px] lg:h-[25px] ${saved ? "" : "opacity-50"}`}
+                            className={`w-[18px] h-[18px] lg:w-[25px] lg:h-[25px] xl:w-[20px] xl:h-[20px] ${saved ? "" : "opacity-50"}`}
                           />
                         </button>
-                        <button className="py-[11.5px] rounded-[8px] font-[400] text-[10px] w-[100%] leading-[12px] bg-[#D22366] sm:text-[12px] sm:leading-[14px] lg:text-[18px] lg:leading-[21px]">
+                        <button className="py-[11.5px] rounded-[8px] font-[400] text-[10px] w-[100%] leading-[12px] bg-[#D22366] sm:text-[12px] sm:leading-[14px] lg:text-[16px] lg:leading-[19px]">
                           <p>GET TICKET</p>
                         </button>
                       </div>
@@ -78,7 +78,7 @@ const EventDeatil = () => {
                     <h1>{detail?.place}</h1>
                   </div>
                 </div>
-                <div className="flexcol gap-[5px] pt-[55px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:ml-[25%] lg:text-[16px] lg:leading-[19px]">
+                <div className="flexcol gap-[5px] pt-[55px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:ml-[25%] lg:text-[16px] lg:leading-[19px] xl:text-[14px] xl:leading-[16px]">
                   <h1 className="text-[14px] leading-[16px] font-[500] pb-[18px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px]">
                     Эвэнтийн тухай
                   </h1>
