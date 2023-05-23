@@ -1,4 +1,3 @@
-import { useChangesNavbarSearch } from "@/context";
 import { specialEventCarts } from "@/utils";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -11,32 +10,16 @@ const breakpoints = [640, 768, 1024];
 
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
-export const SearchInput = ({ set }: { set: any }) => {
+export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
   const [currentChoice, setCurrentChoice] = useState();
 
-  const { categories, loading } = useCategories();
-  console.log(categories);
+  const { categories, categoryLoading } = useCategories();
 
-  const { search } = useChangesNavbarSearch() as { search: boolean };
+  const categoriesArray: object[] = [];
+  categories?.map((el: { id: string; name: string }) => categoriesArray.push({ value: el.name, label: el.name }));
 
-  const selectCategories: { value: string; label: string } = [
-    // { value: "Одон орон", label: "Одон орон" },
-    // { value: "Хөгжим", label: "Хөгжим" },
-    // { value: "Гоо сайхан", label: "Гоо сайхан" },
-    // { value: "Эрүүл мэнд", label: "Эрүүл мэнд" },
-    // { value: "Уран зураг", label: "Уран зураг" },
-    // { value: "Театр", label: "Театр" },
-    // { value: "Е-Спорт", label: "Е-Спорт" },
-    // { value: "Фестивал", label: "Фестивал" },
-    // { value: "Технологи", label: "Технологи" },
-  ];
-
-  categories?.map((el: { id: string; name: string }) => selectCategories.push({ value: el.name, label: el.name }));
-
-  console.log(selectCategories);
   return (
     <>
-      {loading ? <p>loading</p> : <></>}
       <div className="w-full">
         <div className="w-full relative ">
           <input
@@ -58,7 +41,7 @@ export const SearchInput = ({ set }: { set: any }) => {
         <div className={`w-full pt-[24px] font-['Inter'] font-[300] ${search ? "" : " hidden"}`}>
           <div className="lg:hidden">
             <div className="grid grid-cols-2 grid-rows-2 gap-[10px]">
-              {categories && (
+              {!categoryLoading && (
                 <>
                   <Select
                     id="long-value-select"
@@ -73,8 +56,8 @@ export const SearchInput = ({ set }: { set: any }) => {
                   <Select
                     id="long-value-select"
                     instanceId="long-value-select"
-                    defaultValue={selectCategories[0]}
-                    options={selectCategories}
+                    defaultValue={categoriesArray[0]}
+                    options={categoriesArray}
                     styles={colourStyles}
                     components={{
                       IndicatorSeparator: () => null,

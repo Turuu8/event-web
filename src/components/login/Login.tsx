@@ -1,6 +1,6 @@
-import { useAuthContext, useChangesNavbarSearch } from "@/context";
+import { useAuthContext } from "@/context";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 export const Login = () => {
   const [register, setRegister] = useState(false);
@@ -12,16 +12,13 @@ export const Login = () => {
   const { clickButton, sign } = useAuthContext();
   const { setLoginButton } = clickButton;
   const { signIn, signUp } = sign;
-  const { setNavbar } = useChangesNavbarSearch() as { setNavbar: Dispatch<SetStateAction<boolean>> };
 
   const handleSumbit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (register) {
       await signUp(email, firstName, lastName, password);
-      setNavbar(false);
     } else {
       await signIn(email, password);
-      setNavbar(false);
     }
   };
   return (

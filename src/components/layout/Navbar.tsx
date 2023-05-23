@@ -1,17 +1,38 @@
-import { useAuthContext, useChangesNavbarSearch } from "@/context";
+import { useAuthContext } from "@/context";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
-  const { show, navbar, setSearch, setShow, setNavbar } = useChangesNavbarSearch() as ChangeTypes;
+  const [show, setShow] = useState(false);
+  const [navbar, setNavbar] = useState(false);
+
   const { userLogin, clickButton, data } = useAuthContext();
   const { isUser } = userLogin;
   const { setLoginButton } = clickButton;
   const { userInfo } = data;
 
   const router = useRouter();
+
+  // hide navigation bar functionality
+  useEffect(() => {
+    let lastScrollY = window.pageYOffset;
+    const updateScroll = () => {
+      const scrollY = window.pageYOffset;
+      if (lastScrollY > scrollY) {
+        setShow(false);
+      } else {
+        setShow(true);
+      }
+      lastScrollY = scrollY;
+      setNavbar(window.pageYOffset > 40);
+    };
+    window.addEventListener("scroll", updateScroll); // add event listener
+    return () => {
+      window.removeEventListener("scroll", updateScroll); // clean up
+    };
+  }, [show]);
 
   return (
     <>
@@ -24,7 +45,6 @@ export const Navbar = () => {
           <button
             onClick={() => {
               router.push("/");
-              setSearch(false);
             }}
             className="uppercase font-['Roboto'] font-[600] lg:text-[24px] lg:leading-[28px]  2xl:text-[28px] 2xl:leading-[32px] "
           >
@@ -67,7 +87,7 @@ export const Navbar = () => {
                 <button
                   onClick={() => {
                     setDropDown(false);
-                    setLoginButton(() => true);
+                    setLoginButton(true);
                   }}
                   className="hidden lg:block xl:text-[18px] 2xl:text-[21px]"
                 >
@@ -141,11 +161,3 @@ export const Navbar = () => {
     </>
   );
 };
-
-interface ChangeTypes {
-  show: boolean;
-  navbar: boolean;
-  setSearch: Dispatch<SetStateAction<boolean>>;
-  setShow: Dispatch<SetStateAction<boolean>>;
-  setNavbar: Dispatch<SetStateAction<boolean>>;
-}

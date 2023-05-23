@@ -4,7 +4,7 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 
 const Auth = createContext<any>(null);
 
-export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<object | null>(null);
   const [isUser, setIsUser] = useState(false);
