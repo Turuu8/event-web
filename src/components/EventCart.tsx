@@ -9,7 +9,14 @@ export const SpecialEventCart = (props: EVENT_TYPE) => {
   return (
     <button className="flexcol text-center " onClick={() => router.push(`/event/${props.id}`)}>
       <div className="relative w-full h-[190px] min-[500px]:h-[260px] sm:h-[320px] md:h-[400px] lg:h-[265px] xl:h-[380px] 2xl:h-[500px]">
-        <Image width={1000} height={1000} alt="special events" priority src={props.img} className="w-full h-full rounded-[8px]" />
+        <Image
+          width={1000}
+          height={1000}
+          alt="special events"
+          priority
+          src={props?.thumbnail}
+          className="w-full h-full rounded-[8px] object-contain"
+        />
         <div className="flexcol justify-center text-center absolute right-[12px] top-[12px] gap-[2px] rounded-[8px] py-[3px] px-[10px] bg-[#fff] md:right-[15px] md:top-[15px] xl:right-[20px] xl:top-[20px] xl:p-[6px_10px] 2xl:p-[6px_14px] 2xl:right-[25px] 2xl:top-[25px]">
           <h3 className="text-[10px] leading-[12px] font-[400] text-[#000] md:text-[12px] md:leading-[14px] xl:text-[14px] xl:leading-[19px] 2xl:text-[16px] 2xl:leading-[19px]">
             {props.mount}
@@ -20,10 +27,10 @@ export const SpecialEventCart = (props: EVENT_TYPE) => {
         </div>
       </div>
       <p className="w-full capitalize text-[12px] leading-[14px] pt-[12px] text-[#C7C9CF] sm:text-[14px] sm:leading-[16px]  lg:text-[16px] lg:leading-[19px] 2xl:text-[20px] 2xl:leading-[24px] 2xl:pt-[24px]">
-        {props.location}
+        {props?.location}
       </p>
       <h3 className="w-full text-[14px] leading-[16px] pt-[6px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px] lg:pt-[10px] 2xl:text-[24px] 2xl:leading-[29px] 2xl:pt-[12px]">
-        {props.title}
+        {props?.title}
       </h3>
     </button>
   );

@@ -1,3 +1,2 @@
-export * from "./NavbarSearch"
-export * from "./AuthContext"
-export * from "./LoadingProvider"
+export * from "./AuthProvider";
+export * from "./LoadingProvider";

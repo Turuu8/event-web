@@ -1,6 +1,6 @@
 import useCategories from "@/components/hook/useCategories";
 import useEvents from "@/components/hook/useEvents";
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 const Loading = createContext<{
   loading: boolean;
@@ -13,13 +13,15 @@ export const LoadingProvider = ({ children }: { children: ReactNode }) => {
   const { categoryLoading } = useCategories();
   const { eventsLoading } = useEvents();
 
-  if (eventsLoading === true && categoryLoading === true) {
-    console.log(eventsLoading, categoryLoading);
-    // setLoading(true);
-  } else {
-    console.log(eventsLoading, categoryLoading);
-    // setLoading(false);
-  }
+  useEffect(() => {
+    if (eventsLoading === true && categoryLoading === true) {
+      console.log(eventsLoading, categoryLoading);
+      setLoading(false);
+    } else {
+      console.log(eventsLoading, categoryLoading);
+      setLoading(true);
+    }
+  }, []);
 
   return <Loading.Provider value={{ loading, setLoading }}>{children}</Loading.Provider>;
 };

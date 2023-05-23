@@ -1,4 +1,3 @@
-import { useChangesNavbarSearch } from "@/context";
 import { specialEventCarts } from "@/utils";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -11,12 +10,10 @@ const breakpoints = [640, 768, 1024];
 
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
-export const SearchInput = ({ set }: { set: any }) => {
+export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
   const [currentChoice, setCurrentChoice] = useState();
 
-  const { categories, loading } = useCategories();
-
-  const { search } = useChangesNavbarSearch() as { search: boolean };
+  const { categories, categoryLoading } = useCategories();
 
   const categoriesArray: object[] = [];
   categories?.map((el: { id: string; name: string }) => categoriesArray.push({ value: el.name, label: el.name }));
@@ -44,7 +41,7 @@ export const SearchInput = ({ set }: { set: any }) => {
         <div className={`w-full pt-[24px] font-['Inter'] font-[300] ${search ? "" : " hidden"}`}>
           <div className="lg:hidden">
             <div className="grid grid-cols-2 grid-rows-2 gap-[10px]">
-              {!loading && (
+              {!categoryLoading && (
                 <>
                   <Select
                     id="long-value-select"

@@ -1,7 +1,4 @@
-import { useChangesNavbarSearch } from "@/context";
-
 export const Footer = () => {
-  const { search } = useChangesNavbarSearch() as { search: boolean };
   return (
     <div className={`pt-[200px] px-[60px] text-[#686873] pb-[30px] max-[1600px]:p-[80px_45px_25px]`}>
       <div className="w-full border-t-[0.5px] border-[#686873] flexcol items-start justify-between pt-[15px] md:flexrow ">

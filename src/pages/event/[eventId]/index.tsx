@@ -1,6 +1,8 @@
 import { Special } from "@/components";
 import { SpecialEventCart } from "@/components/EventCart";
+import { GET_EVENTS } from "@/graphql";
 import { bigEventCarts, specialEventCarts } from "@/utils";
+import { useQuery } from "@apollo/client";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -11,8 +13,12 @@ const EventDeatil = () => {
   const [deatilBtn, setDeatilBtn] = useState<boolean>(false);
   const router = useRouter();
   const id: any = router.query.eventId;
-  const data = specialEventCarts[id];
-  const detail = data?.detail;
+  const { data, loading } = useQuery(GET_EVENTS);
+  const detail = data?.events?.filter((events) => events.id === id);
+  console.log(detail);
+
+  // const data2 = specialEventCarts[id];
+  // const detail = data2?.detail;
 
   return (
     <main className="w-full font-['Inter']">
@@ -35,20 +41,20 @@ const EventDeatil = () => {
 
           {/* event detail */}
           <div className="flexrow w-[100%]">
-            {data && (
+            {detail && (
               <div className="flexcol w-full">
                 <div className="flexcol gap-[50px] lg:flexrow lg:ml-[25%] lg:gap-[24px]">
                   <div className="flexcol items-center m-auto w-[160px] sm:w-[260px] lg:w-[323px] lg:m-0 xl:w-[330px]">
                     <div className="w-full h-[190px] sm:h-[290px] lg:h-[432px] xl:h-[420px]">
-                      <Image alt="poster image" width={1000} height={1000} className="w-full h-full rounded-[8px]" src={data.img} />
+                      <Image alt="poster image" width={1000} height={1000} className="w-full h-full rounded-[8px]" src={detail[0]?.thumbnail} />
                     </div>
                     {/* save and ticket buttoms */}
                     <div className="text-center flexcol items-center w-full pt-[12px] lg:pt-[26px]">
                       <p className="capitalize text-[12px] leading-[14px] pb-[6px] text-[#C7C9CF] sm:text-[14px] sm:leading-[16px] lg:text-[16px] lg:leading-[19px] lg:pb-[12px]">
-                        {data.location}
+                        {detail[0]?.location}
                       </p>
                       <h1 className="font-[400] text-[14px] leading-[16px] pb-[20px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px] lg:pb-[30px]">
-                        {data.title}
+                        {detail[0]?.title}
                       </h1>
                       <div className="flex justify-between w-full gap-[10px] lg:gap-[20px]">
                         <button
@@ -71,20 +77,17 @@ const EventDeatil = () => {
                   </div>
                   {/* datail text */}
                   <div className="flexcol gap-[8px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:gap-[16px]">
-                    <h1>{detail?.top}</h1>
-                    <h1>{detail?.time}</h1>
-                    <h1>TAX - {detail?.price}</h1>
-                    <h1>{detail?.day}</h1>
-                    <h1>{detail?.place}</h1>
+                    <h1>ҮНЭ - {detail[0]?.price}</h1>
+                    <h1>{detail[0]?.startDate}</h1>
+                    <h1>{detail[0]?.country}</h1>
                   </div>
                 </div>
                 <div className="flexcol gap-[5px] pt-[55px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:ml-[25%] lg:text-[16px] lg:leading-[19px] xl:text-[14px] xl:leading-[16px]">
                   <h1 className="text-[14px] leading-[16px] font-[500] pb-[18px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px]">
                     Эвэнтийн тухай
                   </h1>
-                  <h2>{detail?.textTitle}</h2>
                   <p className={`w-full overflow-hidden text-ellipsis ${deatilBtn ? "whitespace-normal" : "whitespace-nowrap"}`}>
-                    {detail?.textDetail}
+                    {detail[0]?.about}
                   </p>
                 </div>
                 <div className="pt-[18px] lg:ml-[25%]">
