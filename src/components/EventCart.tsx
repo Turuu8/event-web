@@ -33,6 +33,8 @@ export const BigEventCart = (props: EVENT_TYPE) => {
   const [liked, setLiked] = useState<boolean>(false);
   const [likeNumber, setLikeNumber] = useState<number>(25);
   const router = useRouter();
+  // console.log(props.thumbnail);
+
   return (
     <div className="flexcol font-[300] text-[#fff] gap-[24px] lg:flexrow lg:gap-[16px] xl:gap-[24px] 2xl:gap-[32px]">
       <div className="relative w-full h-[350px] min-[500px]:h-[470px] sm:h-[540px] md:h-[600px] lg:w-[36.2%] lg:h-[385px] xl:h-[600px] xl:w-[41%] 2xl:h-[800px] ">
@@ -40,16 +42,16 @@ export const BigEventCart = (props: EVENT_TYPE) => {
           width={1000}
           height={1000}
           alt="special events"
-          src={props.img}
+          src={props?.thumbnail}
           className="w-full h-full rounded-[8px] cursor-pointer"
           onClick={() => router.push(`/event/${props.id}`)}
         />
         <div className="flexcol justify-center text-center absolute right-[20px] top-[20px] gap-[2px] rounded-[8px] py-[3px] px-[10px] bg-[#fff] md:right-[25px] md:top-[25px] xl:p-[10px_15px] xl:right-[30px] xl:top-[30px] 2xl:p-[6px_14px]  2xl:right-[40px] 2xl:top-[40px]">
           <h3 className="text-[10px] leading-[12px] font-[400] text-[#000] md:text-[12px] md:leading-[14px] xl:text-[14px] xl:leading-[16px] 2xl:text-[16px] 2xl:leading-[19px]">
-            {props.mount}
+            {props.startDate}
           </h3>
           <h2 className="text-[16px] leading-[19px] font-[400] text-[#000] md:text-[18px] md:leading-[21px] 2xl:text-[24px] 2xl:leading-[29px]">
-            {props.day}
+            {props.endDate}
           </h2>
         </div>
       </div>

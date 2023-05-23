@@ -1,16 +1,17 @@
 import { BigEventCart, Login, SearchInput, Special, SpecialEventCart } from "@/components";
+import useEvents from "@/components/hook/useEvents";
 import { useAuthContext, useChangesNavbarSearch } from "@/context";
-import { GET_CATEGORIES, GET_EVENT, GET_EVENTS } from "@/graphql";
-import { bigEventCarts, specialEventCarts } from "@/utils";
+import { bigEventCarts } from "@/utils";
 import { useQuery } from "@apollo/client";
 import { Dispatch, SetStateAction, useState } from "react";
 
 export default function Home() {
   const { search, setSearch } = useChangesNavbarSearch() as { search: boolean; setSearch: Dispatch<SetStateAction<boolean>> };
-  const { loading, error, data } = useQuery(GET_EVENTS);
+  const { events, loading } = useEvents();
   const { clickButton } = useAuthContext();
   const { loginButton } = clickButton;
 
+  console.log("helo");
   return (
     <>
       {loginButton && <Login />}
@@ -28,8 +29,8 @@ export default function Home() {
               Таньд санал болгох
             </h1>
             <div className="flexcol pt-[40px] gap-[50px] lg:pt-[60px] xl:gap-[60px] 2xl:pt-[75px] 2xl:gap-[80px]">
-              {bigEventCarts.map((el, i) => {
-                return <BigEventCart key={i} {...el} />;
+              {events?.map((el) => {
+                return <BigEventCart key={el.id} {...el} />;
               })}
             </div>
           </div>
