@@ -1,22 +1,19 @@
-import { specialEventCarts } from "@/utils";
-import Image from "next/image";
-import React, { useState } from "react";
 import Select, { StylesConfig } from "react-select";
 import { SpecialEventCart } from "../EventCart";
-import { Special } from "./Special";
-import useCategories from "../hook/useCategories";
+import { specialEventCarts } from "@/utils";
+import { GET_CATEGORIES } from "@/graphql";
+import { useQuery } from "@apollo/client";
+import Image from "next/image";
 
 const breakpoints = [640, 768, 1024];
 
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
 export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
-  const [currentChoice, setCurrentChoice] = useState();
-
-  const { categories, categoryLoading } = useCategories();
+  const { data, loading } = useQuery(GET_CATEGORIES);
 
   const categoriesArray: object[] = [];
-  categories?.map((el: { id: string; name: string }) => categoriesArray.push({ value: el.name, label: el.name }));
+  data?.categories?.map((el: { id: string; name: string }) => categoriesArray.push({ value: el.name, label: el.name }));
 
   return (
     <>
@@ -41,7 +38,7 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
         <div className={`w-full pt-[24px] font-['Inter'] font-[300] ${search ? "" : " hidden"}`}>
           <div className="lg:hidden">
             <div className="grid grid-cols-2 grid-rows-2 gap-[10px]">
-              {!categoryLoading && (
+              {!loading && (
                 <>
                   <Select
                     id="long-value-select"
@@ -112,7 +109,7 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
             </div>
             <h1 className="text-[#fff] text-[24px] pb-[32px] max-[1600px]:text-[18px] max-[1600px]:pb-[25px]">Катигори</h1>
             <div className="flex flex-wrap gap-[16px] pb-[80px] max-[1600px]:gap-[12px]">
-              {categories?.map((el: { id: string; name: string }) => {
+              {data?.categories?.map((el: { id: string; name: string }) => {
                 return (
                   <button
                     key={el.id}

@@ -9,14 +9,14 @@ export const SpecialEventCart = (props: EVENT_TYPE) => {
   return (
     <button className="flexcol text-center " onClick={() => router.push(`/event/${props.id}`)}>
       <div className="relative w-full h-[190px] min-[500px]:h-[260px] sm:h-[320px] md:h-[400px] lg:h-[265px] xl:h-[380px] 2xl:h-[500px]">
-        <Image
+        {/* <Image
           width={1000}
           height={1000}
           alt="special events"
           priority
           src={props?.thumbnail}
-          className="w-full h-full rounded-[8px] object-contain"
-        />
+          className="w-full h-full rounded-[8px] "
+        /> */}
         <div className="flexcol justify-center text-center absolute right-[12px] top-[12px] gap-[2px] rounded-[8px] py-[3px] px-[10px] bg-[#fff] md:right-[15px] md:top-[15px] xl:right-[20px] xl:top-[20px] xl:p-[6px_10px] 2xl:p-[6px_14px] 2xl:right-[25px] 2xl:top-[25px]">
           <h3 className="text-[10px] leading-[12px] font-[400] text-[#000] md:text-[12px] md:leading-[14px] xl:text-[14px] xl:leading-[19px] 2xl:text-[16px] 2xl:leading-[19px]">
             {props.mount}

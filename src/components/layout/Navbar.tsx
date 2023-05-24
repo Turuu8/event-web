@@ -1,4 +1,4 @@
-import { useAuthContext } from "@/context";
+import { useAuthContext, useLoading } from "@/context";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -9,6 +9,10 @@ export const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
 
   const { userLogin, clickButton, data } = useAuthContext();
+  const { setSearch } = useLoading() as {
+    setSearch: Dispatch<SetStateAction<boolean>>;
+  };
+
   const { isUser } = userLogin;
   const { setLoginButton } = clickButton;
   const { userInfo } = data;
@@ -45,6 +49,7 @@ export const Navbar = () => {
           <button
             onClick={() => {
               router.push("/");
+              setSearch(false);
             }}
             className="uppercase font-['Roboto'] font-[600] lg:text-[24px] lg:leading-[28px]  2xl:text-[28px] 2xl:leading-[32px] "
           >
