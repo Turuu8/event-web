@@ -54,7 +54,7 @@ export default function Home() {
               Таньд санал болгох
             </h1>
             <div className="flexcol pt-[40px] gap-[50px] lg:pt-[60px] xl:gap-[60px] 2xl:pt-[75px] 2xl:gap-[80px]">
-              {data?.events?.map((el: any) => {
+              {data?.events?.map((el: JSX.IntrinsicAttributes & DETAIL_TYPE) => {
                 return <BigEventCart key={el.id} {...el} />;
               })}
             </div>

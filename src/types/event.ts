@@ -7,6 +7,7 @@ export interface EVENT_TYPE {
   detail: DETAIL_TYPE;
 }
 export interface DETAIL_TYPE {
+  map: any;
   filter: any;
   title: string;
   about: string;
