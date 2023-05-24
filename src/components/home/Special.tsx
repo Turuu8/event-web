@@ -1,12 +1,7 @@
 import { DETAIL_TYPE } from "@/types";
 import { SpecialEventCart } from "../EventCart";
 
-export const Special = (props: {
-  search: boolean;
-  data: {
-    events: [];
-  };
-}) => {
+export const Special = (props: { search: boolean; data: any }) => {
   return (
     <div className={`pt-[65px] text-[#fff] duration-[0.3s] 2xl:pt-[80px] ${props.search ? "hidden" : ""}`}>
       <h1 className="capitalize font-[500] pb-[24px] text-[16px] leading-[19px] md:text-[18px] md:leading-[21px] lg:pb-[35px] xl:pb-[40px] 2xl:text-[24px] 2xl-[29px] 2xl:pb-[60px]">
