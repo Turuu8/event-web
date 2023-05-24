@@ -8,7 +8,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       {loading && (
-        <div role="status" className="fixed top-0 right-0 left-0 bottom-0 m-auto w-full bg-[#000000b6] z-40 flex items-start justify-center">
+        <div role="status" className="fixed top-0 right-0 left-0 bottom-0 m-auto w-full bg-[#000000e0] z-40 flex items-start justify-center">
           <div className="m-auto">
             <svg
               aria-hidden="true"

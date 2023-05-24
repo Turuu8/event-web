@@ -26,17 +26,14 @@ export default function Home() {
   LoadingFun(loading);
 
   if (data) {
-    const specialData = data.events?.filter((el) => StartDateFun(el.startDate)[1] === test);
-    // data.events.map((el: { startDate: number }) => {
-    //   specialData.push(
-    //     StartDateFun(el.startDate)
-    //   )
-    // })
-    // specialData.map((el) => {
-    //   console.log(StartDateFun(el.startDate)[2]);
+    // const specialData = data.events?.filter((el) => StartDateFun(el.startDate)[1] === test);
+    // const dateTest = [];
+    // console.log(specialData.startDate);
+    // specialData.map((el, i) => {
+    //   dateTest.push(StartDateFun(el.startDate)[2]);
     // });
-    const dateTest = specialData.filter((el) => el.startDate === el.startDate);
-    console.log(dateTest);
+    // const result = StartDateFun(specialData.startDate)[2].reduce((a, b) => Math.min(a, b));
+    // console.log(result);
   }
   // specialData.push({ mount: StartDateFun(el.startDate)[1], day: StartDateFun(el.startDate)[2] });
 
