@@ -1,7 +1,7 @@
 import { Special } from "@/components";
-import { SpecialEventCart } from "@/components/EventCart";
 import { GET_EVENTS } from "@/graphql";
-import { bigEventCarts, specialEventCarts } from "@/utils";
+import { DETAIL_TYPE } from "@/types";
+import { LoadingFun } from "@/utils/loading";
 import { useQuery } from "@apollo/client";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -10,16 +10,14 @@ import React, { useState } from "react";
 const EventDeatil = () => {
   const [saved, setSaved] = useState<boolean>(false);
   const [liked, setLiked] = useState<boolean>(false);
-  const [deatilBtn, setDeatilBtn] = useState<boolean>(false);
+  const [detailBtn, setDetailBtn] = useState<boolean>(false);
+
   const router = useRouter();
   const id: any = router.query.eventId;
-  const { data, loading } = useQuery(GET_EVENTS);
-  const detail = data?.events?.filter((events) => events.id === id);
-  console.log(detail);
+  const { data, loading } = useQuery(GET_EVENTS) as { data: { events: DETAIL_TYPE }; loading: any };
+  const detail = data?.events?.filter((events: DETAIL_TYPE) => events.id === id);
 
-  // const data2 = specialEventCarts[id];
-  // const detail = data2?.detail;
-
+  LoadingFun(loading);
   return (
     <main className="w-full font-['Inter']">
       <div className="p-[125px_32px_0] max-w-[1920px] m-auto relative lg:px-[45px] xl:pt-[180px]">
@@ -46,12 +44,18 @@ const EventDeatil = () => {
                 <div className="flexcol gap-[50px] lg:flexrow lg:ml-[25%] lg:gap-[24px]">
                   <div className="flexcol items-center m-auto w-[160px] sm:w-[260px] lg:w-[323px] lg:m-0 xl:w-[330px]">
                     <div className="w-full h-[190px] sm:h-[290px] lg:h-[432px] xl:h-[420px]">
-                      <Image alt="poster image" width={1000} height={1000} className="w-full h-full rounded-[8px]" src={detail[0]?.thumbnail} />
+                      <Image
+                        alt="poster image"
+                        width={1000}
+                        height={1000}
+                        className="w-full h-full rounded-[8px] object-cover"
+                        src={detail[0]?.thumbnail}
+                      />
                     </div>
                     {/* save and ticket buttoms */}
                     <div className="text-center flexcol items-center w-full pt-[12px] lg:pt-[26px]">
                       <p className="capitalize text-[12px] leading-[14px] pb-[6px] text-[#C7C9CF] sm:text-[14px] sm:leading-[16px] lg:text-[16px] lg:leading-[19px] lg:pb-[12px]">
-                        {detail[0]?.location}
+                        {detail[0]?.city?.name}, {detail[0]?.country?.name}
                       </p>
                       <h1 className="font-[400] text-[14px] leading-[16px] pb-[20px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px] lg:pb-[30px]">
                         {detail[0]?.title}
@@ -79,21 +83,23 @@ const EventDeatil = () => {
                   <div className="flexcol gap-[8px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:gap-[16px]">
                     <h1>ҮНЭ - {detail[0]?.price}</h1>
                     <h1>{detail[0]?.startDate}</h1>
-                    <h1>{detail[0]?.country}</h1>
+                    <h1>
+                      {detail[0]?.city?.name} , {detail[0]?.country?.name}
+                    </h1>
                   </div>
                 </div>
                 <div className="flexcol gap-[5px] pt-[55px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:ml-[25%] lg:text-[16px] lg:leading-[19px] xl:text-[14px] xl:leading-[16px]">
                   <h1 className="text-[14px] leading-[16px] font-[500] pb-[18px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px]">
                     Эвэнтийн тухай
                   </h1>
-                  <p className={`w-full overflow-hidden text-ellipsis ${deatilBtn ? "whitespace-normal" : "whitespace-nowrap"}`}>
+                  <p className={`w-full overflow-hidden text-ellipsis ${detailBtn ? "whitespace-normal" : "whitespace-nowrap"}`}>
                     {detail[0]?.about}
                   </p>
                 </div>
                 <div className="pt-[18px] lg:ml-[25%]">
-                  <button onClick={() => setDeatilBtn((p) => !p)}>
+                  <button onClick={() => setDetailBtn((p) => !p)}>
                     <h1 className="text-[12px] leading-[14px] capitalize underline underline-offset-[4px] sm:text-[14px] sm:leading-[16px] lg:text-[16px] lg:leading-[19px]">
-                      {deatilBtn ? "Хураах" : "Дэлгэрэнгүй"}
+                      {detailBtn ? "Хураах" : "Дэлгэрэнгүй"}
                     </h1>
                   </button>
                 </div>
@@ -102,7 +108,7 @@ const EventDeatil = () => {
           </div>
         </div>
         {/* special events */}
-        <Special />
+        {/* <Special /> */}
       </div>
     </main>
   );

@@ -103,6 +103,16 @@ export const GET_EVENTS = gql`
       expirationdate
       endDate
       about
+      category {
+        id
+        name
+      }
+      city {
+        name
+      }
+      country {
+        name
+      }
       _id
     }
   }

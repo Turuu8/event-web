@@ -86,9 +86,9 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
             {/* search result */}
             <h1 className="pt-[55px] pb-[24px] font-[400] text-[14px] leading-[16px] text-[#C7C9CF]">{`4 илэрц`}</h1>
             <div className="grid grid-cols-2 grid-rows-2 gap-x-[16px] gap-y-[40px] md:gap-x-[18px] md:gap-y-[45px] lg:grid-cols-4 lg:grid-rows-1 lg:gap-[20px] 2xl:gap-[32px]">
-              {specialEventCarts.map((el, i) => {
+              {/* {specialEventCarts.map((el, i) => {
                 return <SpecialEventCart key={i} {...el} />;
-              })}
+              })} */}
             </div>
           </div>
 

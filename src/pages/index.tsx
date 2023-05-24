@@ -1,6 +1,9 @@
 import { BigEventCart, SearchInput, Special } from "@/components";
 import { useAuthContext, useLoading } from "@/context";
 import { GET_EVENTS } from "@/graphql";
+import { DETAIL_TYPE } from "@/types";
+import { StartDateFun } from "@/utils/date";
+import { LoadingFun } from "@/utils/loading";
 import { useQuery } from "@apollo/client";
 import dynamic from "next/dynamic";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -8,20 +11,35 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 const Login = dynamic(() => import("../components/login/Login").then((module) => module.Login));
 
 export default function Home() {
-  const { search, setSearch, setLoading } = useLoading() as {
+  const { search, setSearch } = useLoading() as {
     search: boolean;
     setSearch: Dispatch<SetStateAction<boolean>>;
-    setLoading: Dispatch<SetStateAction<boolean>>;
   };
-  const { data, loading } = useQuery(GET_EVENTS);
+  const start = Date.now();
+  const test = new Date(start).toISOString().slice(0, 10).split("-")[1];
+
+  // const specialData: string[] = [];
+  const { data, loading } = useQuery(GET_EVENTS) as { data: { events: DETAIL_TYPE }; loading: any };
   const { clickButton } = useAuthContext();
   const { loginButton } = clickButton;
-  useEffect(() => {
-    if (!loading) {
-      setLoading(false);
-    }
-  }, [loading, setLoading]);
-  console.log("hello");
+
+  LoadingFun(loading);
+
+  if (data) {
+    const specialData = data.events?.filter((el) => StartDateFun(el.startDate)[1] === test);
+    // data.events.map((el: { startDate: number }) => {
+    //   specialData.push(
+    //     StartDateFun(el.startDate)
+    //   )
+    // })
+    // specialData.map((el) => {
+    //   console.log(StartDateFun(el.startDate)[2]);
+    // });
+    const dateTest = specialData.filter((el) => el.startDate === el.startDate);
+    console.log(dateTest);
+  }
+  // specialData.push({ mount: StartDateFun(el.startDate)[1], day: StartDateFun(el.startDate)[2] });
+
   return (
     <>
       {loginButton && <Login />}
@@ -33,7 +51,7 @@ export default function Home() {
         />
         <div className="pt-[95px] max-w-[1920px] w-full m-auto px-[32px] lg:p-[130px_45px_0] 2xl:p-[165px_60px_0]">
           <SearchInput set={setSearch} search={search} />
-          {/* <Special search={search} /> */}
+          <Special search={search} data={data?.events} />
           <div className={`pt-[70px] duration-[0.3s] lg:pt-[100px] 2xl:pt-[130px] ${search ? "hidden" : ""}`}>
             <h1 className="uppercase w-full text-[18px] leading-[21px] font-[400] text-[#D22366] md:text-[20px] md:leading-[23px] lg:text-[24px] lg:leading-[29px] 2xl:text-[32px] 2xl:leading-[38px]">
               Таньд санал болгох
