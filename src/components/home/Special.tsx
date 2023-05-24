@@ -4,7 +4,6 @@ import { SpecialEventCart } from "../EventCart";
 export const Special = (props: {
   search: boolean;
   data: {
-    map(arg0: (el: DETAIL_TYPE) => JSX.Element): import("react").ReactNode;
     events: [];
   };
 }) => {
