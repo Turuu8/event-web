@@ -29,10 +29,22 @@ const EventDeatil = () => {
 
   // console.log(findcompany);
   const fetchData = () => {
-    if (id.slice(0, 3) === "123") {
+    if (id === "12345") {
       detail = specialEventCarts.filter((el) => el.id === id);
     } else {
-      detail = data?.events?.filter((events: DETAIL_TYPE) => events.id === id);
+      if (id === "12346") {
+        detail = specialEventCarts.filter((el) => el.id === id);
+      } else {
+        if (id === "12347") {
+          detail = specialEventCarts.filter((el) => el.id === id);
+        } else {
+          if (id === "12348") {
+            detail = specialEventCarts.filter((el) => el.id === id);
+          } else {
+            detail = data?.events?.filter((events: DETAIL_TYPE) => events.id === id);
+          }
+        }
+      }
       LoadingFun(loading);
     }
   };
