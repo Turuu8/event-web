@@ -13,7 +13,7 @@ const breakpoints = [640, 768, 1024];
 
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
-export const SearchInput = ({ set, search, events }: { set: any; search: boolean }) => {
+export const SearchInput = ({ set, search, events }: { set: any; search: boolean; events: object[] }) => {
   const { tomorrow, today, lastDayOfThisWeek, lastDayOfThisMonth } = useDay();
   const [dayFilter, setDayFilter] = useState(0);
   const [dayFilterData, setDayFilterData] = useState([]);
