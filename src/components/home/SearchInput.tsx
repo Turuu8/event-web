@@ -21,6 +21,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
   const [dayFilterData, setDayFilterData] = useState([]);
   const [input, setInput] = useState("");
   const [result, setResult] = useState();
+  const [click, setClick] = useState("");
 
   const { setLoading } = useLoading() as {
     setLoading: Dispatch<SetStateAction<boolean>>;
@@ -96,27 +97,42 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
 
   useEffect(() => {
     (async () => {
-      if (input !== "") {
-        try {
-          await typeSearch({
-            variables: {
-              arg: {
-                includes: input.target.value,
-              },
+      try {
+        await typeSearch({
+          variables: {
+            arg: {
+              includes: input,
             },
-            onCompleted: (data) => {
-              setDayFilterData(data.events);
-              setDayFilter(data.events.length);
-            },
-          });
-        } catch (err) {
-          console.log(err);
-        }
+          },
+          onCompleted: (data) => {
+            setDayFilterData(data.events);
+            setDayFilter(data.events.length);
+          },
+        });
+      } catch (err) {
+        console.log(err);
       }
     })();
-  }, [input, setInput]);
+  }, [input, typeSearch]);
 
-  console.log(result);
+  // useEffect(() => {
+  //   (() => {
+  //     switch (click) {
+  //       case "/all":
+  //         return setCurrent(0);
+  //       case "/men":
+  //         return setCurrent(2);
+  //       case "/women":
+  //         return setCurrent(1);
+  //       case "/bag":
+  //         return setCurrent(3);
+  //       case "/account":
+  //         return setCurrent(4);
+  //       default:
+  //         return setCurrent(null);
+  //     }
+  //   })();
+  // }, [click]);
 
   return (
     <>
@@ -127,8 +143,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
             placeholder="Хайх"
             className="w-full bg-transparent focus:outline-none h-[33px] pl-[42px] rounded-[8px] border-[0.5px] text-[14px] border-[#C7C9CF] text-[#fff] placeholder-[#C7C9CF] md:h-[40px] md:text-[16px] 2xl:h-[60px] 2xl:text-[18px] 2xl:pl-[50px]"
             onClick={() => set(true)}
-            onChange={setInput}
-            // onBlur={() => set(false)}
+            onChange={(e) => setInput(e.target.value)}
           />
           <Image
             width={40}
@@ -230,16 +245,9 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
                 return (
                   <button
                     key={i}
-                    className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] duration-[0.3s] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px]`}
+                    className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] duration-[0.3s] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px] focus:bg-[#D22366] focus:text-[#fff]`}
                     onClick={(e) => {
                       set(true);
-                      if (e.currentTarget.style.background == "") {
-                        e.currentTarget.style.background = "#D22366";
-                        e.currentTarget.style.color = "#fff";
-                      } else {
-                        e.currentTarget.style.background = "";
-                        e.currentTarget.style.color = "";
-                      }
                       // (async () => {})
                       FilterCategory(el.id);
                     }}

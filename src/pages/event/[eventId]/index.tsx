@@ -1,4 +1,4 @@
-import { Special } from "@/components";
+import { Special, SpecialEventCart } from "@/components";
 import { GET_COMPANIES, GET_EVENTS } from "@/graphql";
 import { DETAIL_TYPE } from "@/types";
 import { specialEventCarts } from "@/utils";
@@ -29,15 +29,17 @@ const EventDeatil = () => {
 
   // console.log(findcompany);
   const fetchData = () => {
-    // if (id.slice(0, 3) === "123") {
-    //   detail = specialEventCarts.filter((el) => el.id === id);
-    // } else {
-    // }
-    detail = data?.events?.filter((events: DETAIL_TYPE) => events.id === id);
+    if (id.slice(0, 3) === "123") {
+      detail = specialEventCarts.filter((el) => el.id === id);
+    } else {
+      detail = data?.events?.filter((events: DETAIL_TYPE) => events.id === id);
+      LoadingFun(loading);
+    }
   };
   fetchData();
 
-  LoadingFun(loading);
+  let special = data.events.filter((el: DETAIL_TYPE) => el.id !== id);
+
   return (
     <main className="w-full font-['Inter']">
       <div className="p-[125px_32px_0] max-w-[1920px] m-auto relative lg:px-[45px] xl:pt-[180px]">
@@ -123,7 +125,14 @@ const EventDeatil = () => {
           </div>
         </div>
         {/* special events */}
-        {/* <Special /> */}
+        <h1 className="pt-[150px] pb-[60px]">Таньд санал болгох</h1>
+        <div className="grid grid-cols-2 grid-rows-2 gap-x-[16px] gap-y-[40px] md:gap-x-[18px] md:gap-y-[45px] lg:grid-cols-4 lg:grid-rows-1 lg:gap-[20px] 2xl:gap-[32px]">
+          {special?.map((el: DETAIL_TYPE, i: number) => {
+            if (i <= 3) {
+              return <SpecialEventCart key={i} {...el} />;
+            }
+          })}
+        </div>
       </div>
     </main>
   );
