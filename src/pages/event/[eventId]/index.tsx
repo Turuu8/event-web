@@ -50,7 +50,7 @@ const EventDeatil = () => {
   };
   fetchData();
 
-  let special = data.events.filter((el: DETAIL_TYPE) => el.id !== id);
+  let special = data?.events?.filter((el: DETAIL_TYPE) => el.id !== id);
 
   return (
     <main className="w-full font-['Inter']">
