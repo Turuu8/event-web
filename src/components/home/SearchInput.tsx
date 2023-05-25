@@ -96,20 +96,22 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
 
   useEffect(() => {
     (async () => {
-      try {
-        await typeSearch({
-          variables: {
-            arg: {
-              includes: input.target.value,
+      if (input !== "") {
+        try {
+          await typeSearch({
+            variables: {
+              arg: {
+                includes: input.target.value,
+              },
             },
-          },
-          onCompleted: (data) => {
-            setDayFilterData(data.events);
-            setDayFilter(data.events.length);
-          },
-        });
-      } catch (err) {
-        console.log(err);
+            onCompleted: (data) => {
+              setDayFilterData(data.events);
+              setDayFilter(data.events.length);
+            },
+          });
+        } catch (err) {
+          console.log(err);
+        }
       }
     })();
   }, [input, setInput]);
