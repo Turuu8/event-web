@@ -8,7 +8,7 @@ export const Special = (props: { search: boolean; data: any }) => {
         онцлох эвэнт
       </h1>
       <div className="grid grid-cols-2 grid-rows-2 gap-x-[16px] gap-y-[40px] md:gap-x-[18px] md:gap-y-[45px] lg:grid-cols-4 lg:grid-rows-1 lg:gap-[20px] 2xl:gap-[32px]">
-        {props.data?.map((el: DETAIL_TYPE) => {
+        {props?.data?.map((el: DETAIL_TYPE) => {
           return <SpecialEventCart key={el.id} {...el} />;
         })}
       </div>
