@@ -1,11 +1,13 @@
 import { Special } from "@/components";
-import { GET_EVENTS } from "@/graphql";
+import { GET_COMPANIES, GET_EVENTS } from "@/graphql";
 import { DETAIL_TYPE } from "@/types";
+import { specialEventCarts } from "@/utils";
+import { StartDateFun } from "@/utils/date";
 import { LoadingFun } from "@/utils/loading";
 import { useQuery } from "@apollo/client";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const EventDeatil = () => {
   const [saved, setSaved] = useState<boolean>(false);
@@ -14,8 +16,26 @@ const EventDeatil = () => {
 
   const router = useRouter();
   const id: any = router.query.eventId;
+  let detail: any = [];
   const { data, loading } = useQuery(GET_EVENTS) as { data: { events: DETAIL_TYPE }; loading: any };
-  const detail = data?.events?.filter((events: DETAIL_TYPE) => events.id === id);
+  // const { data: companies } = useQuery(GET_COMPANIES);
+  // console.log(companies?.companies);
+  // const findcompany = async () => await
+  // useEffect(() => {
+  //   (async () => {
+  //     await findcompany();
+  //   })();
+  // }, []);
+
+  // console.log(findcompany);
+  const fetchData = () => {
+    // if (id.slice(0, 3) === "123") {
+    //   detail = specialEventCarts.filter((el) => el.id === id);
+    // } else {
+    // }
+    detail = data?.events?.filter((events: DETAIL_TYPE) => events.id === id);
+  };
+  fetchData();
 
   LoadingFun(loading);
   return (
@@ -74,10 +94,9 @@ const EventDeatil = () => {
                   <div className="flexcol gap-[8px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:gap-[16px]">
                     <h1 className="text-[14px] font-[500] pb-[5px] md:text-[16px] xl:text-[18px]">Эвэнтийн мэдээлэл :</h1>
                     <h1>Tасалбар : {detail[0]?.price}</h1>
+                    <h1>Өдөр : 5 сарын 26 - сарын 27</h1>
                     <h1>Цаг : 7:00 PM - 10:30 PM</h1>
-                    <h1>
-                      {detail[0]?.city?.name} , {detail[0]?.country?.name}
-                    </h1>
+                    <h1 className="">Зохион байгуулсан :</h1>
                   </div>
                 </div>
                 <div className="flexcol gap-[5px] pt-[55px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:ml-[25%] lg:text-[16px] lg:leading-[19px] xl:text-[14px] xl:leading-[16px]">
@@ -86,6 +105,10 @@ const EventDeatil = () => {
                   </h1>
                   <p className={`w-full overflow-hidden text-ellipsis ${detailBtn ? "whitespace-normal" : "whitespace-nowrap"}`}>
                     {detail[0]?.about}
+                  </p>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus asperiores molestias quidem, atque voluptates dolor! Temporibus
+                    maxime quidem, rerum fuga nisi qui! Voluptas eos tempore dolor ducimus ipsa unde laboriosam!
                   </p>
                 </div>
                 <div className="pt-[18px] lg:ml-[25%]">

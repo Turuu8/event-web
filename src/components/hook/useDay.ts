@@ -1,4 +1,11 @@
-import { getNextDayOfSelectedDay, getFirstDayOfMonth, getLastDayOfMonth } from "../../utils/event";
+
+export function getFirstDayOfMonth(year: any, month: any) {
+  return new Date(year, month - 1, 2);
+}
+export function getLastDayOfMonth(year: any, month: any) {
+  return new Date(year, month, 1);
+}
+
 export function getnextday(date: Date) {
   const date1 = new Date(date)
     .toISOString()
@@ -24,6 +31,5 @@ export default function useDay() {
     firstDayOfThisMonth,
     lastDayOfThisMonth,
     lastDayOfThisWeek,
-    getNextDayOfSelectedDay,
   };
 }

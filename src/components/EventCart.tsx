@@ -7,13 +7,21 @@ import { useState } from "react";
 export const SpecialEventCart = (props: DETAIL_TYPE) => {
   const router = useRouter();
 
+  let mount = "";
+
+  if (StartDateFun(props?.startDate)[1].split("")[0] > "0") {
+    mount = StartDateFun(props.startDate)[1];
+  } else {
+    mount = StartDateFun(props?.startDate)[1].split("")[1];
+  }
+
   return (
     <button className="flexcol text-center " onClick={() => router.push(`/event/${props?.id}`)}>
       <div className="relative w-full h-[190px] min-[500px]:h-[260px] sm:h-[320px] md:h-[400px] lg:h-[265px] xl:h-[380px] 2xl:h-[500px]">
         <Image width={1000} height={1000} alt="special events" priority src={props?.thumbnail} className="w-full h-full rounded-[8px] object-cover" />
-        <div className="flexcol justify-center text-center absolute right-[12px] top-[12px] gap-[2px] rounded-[8px] py-[3px] px-[10px] bg-[#fff] md:right-[15px] md:top-[15px] xl:right-[20px] xl:top-[20px] xl:p-[6px_10px] 2xl:p-[6px_14px] 2xl:right-[25px] 2xl:top-[25px]">
+        <div className="flexcol justify-center text-center absolute right-[12px] top-[12px] gap-[2px] rounded-[8px] py-[3px] px-[10px] bg-[#fff] md:right-[15px] md:top-[15px] md:py-[5px] xl:right-[20px] xl:top-[20px] xl:p-[6px_10px] 2xl:p-[6px_14px] 2xl:right-[25px] 2xl:top-[25px]">
           <h3 className="text-[10px] leading-[12px] font-[400] text-[#000] md:text-[12px] md:leading-[14px] xl:text-[14px] xl:leading-[19px] 2xl:text-[16px] 2xl:leading-[19px]">
-            {StartDateFun(props.startDate)[1]}сар
+            {mount}сар
           </h3>
           <h2 className="text-[16px] leading-[19px] font-[400] text-[#000] md:text-[18px] md:leading-[21px] 2xl:text-[24px] 2xl:leading-[29px]">
             {StartDateFun(props.startDate)[2]}
@@ -21,7 +29,8 @@ export const SpecialEventCart = (props: DETAIL_TYPE) => {
         </div>
       </div>
       <p className="w-full capitalize text-[12px] leading-[14px] pt-[12px] text-[#C7C9CF] sm:text-[14px] sm:leading-[16px]  lg:text-[16px] lg:leading-[19px] 2xl:text-[20px] 2xl:leading-[24px] 2xl:pt-[24px]">
-        {props?.city?.name} , {props?.country?.name}
+        Улаанбаатар , Монгол
+        {/* {props?.city?.name} , {props?.country?.name} */}
       </p>
       <h3 className="w-full text-[14px] leading-[16px] pt-[6px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px] lg:pt-[10px] 2xl:text-[24px] 2xl:leading-[29px] 2xl:pt-[12px]">
         {props?.title}
@@ -41,11 +50,10 @@ export const BigEventCart = (props: DETAIL_TYPE) => {
   } else {
     mount = StartDateFun(props?.startDate)[1].split("")[1];
   }
-  console.log(mount);
 
   return (
     <div className="flexcol font-[300] text-[#fff] gap-[24px] lg:flexrow lg:gap-[16px] xl:gap-[24px] 2xl:gap-[32px]">
-      <div className="relative w-full h-[350px] min-[500px]:h-[470px] sm:h-[540px] md:h-[600px] lg:w-[36.2%] lg:h-[385px] xl:h-[600px] xl:w-[35%] xl:min-w-[35%] 2xl:h-[800px] ">
+      <div className="relative w-full h-[350px] min-[500px]:h-[470px] sm:h-[540px] md:h-[700px] lg:w-[36.2%] lg:h-[385px] xl:h-[600px] xl:w-[35%] xl:min-w-[35%] 2xl:h-[800px] ">
         <Image
           width={1000}
           height={1000}
@@ -54,7 +62,7 @@ export const BigEventCart = (props: DETAIL_TYPE) => {
           className="w-full h-full rounded-[8px] cursor-pointer "
           onClick={() => router.push(`/event/${props.id}`)}
         />
-        <div className="flexcol justify-center text-center absolute right-[20px] top-[20px] gap-[2px] rounded-[8px] py-[3px] px-[10px] bg-[#fff] md:right-[25px] md:top-[25px] xl:p-[10px_15px] xl:right-[30px] xl:top-[30px] 2xl:p-[6px_14px]  2xl:right-[40px] 2xl:top-[40px]">
+        <div className="flexcol justify-center text-center absolute right-[20px] top-[20px] gap-[2px] rounded-[8px] py-[3px] px-[10px] bg-[#fff] md:right-[25px] md:top-[25px] md:py-[5px] xl:p-[10px_15px] xl:right-[30px] xl:top-[30px] 2xl:p-[6px_14px]  2xl:right-[40px] 2xl:top-[40px]">
           <h3 className="text-[10px] leading-[12px] font-[400] text-[#000] md:text-[12px] md:leading-[14px] xl:text-[14px] xl:leading-[16px] 2xl:text-[16px] 2xl:leading-[19px]">
             {mount}сар
           </h3>

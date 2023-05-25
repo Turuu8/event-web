@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userInfo, setUserInfo] = useState<object | null>(null);
   const [isUser, setIsUser] = useState(false);
   const [loginButton, setLoginButton] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
   const [signinGQL, { data, loading, error }] = useMutation(SIGN_IN);
   const [signupGQL] = useMutation(SIGN_UP);
@@ -25,56 +26,70 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             const res = data.signin;
             localStorage.setItem("token", res.token);
             setToken(res.token);
-            setLoginButton(false);
             setIsUser(true);
             setUserInfo(data.signin.user);
           }
         },
       });
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      setErrorMessage(err.message);
     }
   };
 
   const signUp = async (email: string, firstName: string, lastName: string, password: string) => {
+    console.log(email, firstName, lastName, password);
     try {
       await signupGQL({
         variables: {
-          email,
-          firstName,
-          lastName,
-          password,
+          user: {
+            email,
+            firstName,
+            lastName,
+            password,
+          },
         },
         onCompleted: (data) => {
           if (data) {
             const res = data.signup;
             localStorage.setItem("token", res.token);
-            console.log("success", res);
+            setToken(res.token);
+            setUserInfo(res.user);
+            setIsUser(true);
           }
         },
       });
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      setErrorMessage(err.message);
     }
   };
-  // async function checkAuth() {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setIsUser(true);
-  //     setToken(token as string);
-  //   } else {
-  //     setIsUser(false);
-  //   }
-  // }
-  // useEffect(() => {
-  //   checkAuth();
-  // }, [isUser]);
+
+  const logout = async () => {
+    await localStorage.removeItem("token");
+    setLoginButton((p) => (p = false));
+    setToken(null);
+    setUserInfo(null);
+    setIsUser(false);
+  };
+
+  const checkAuth = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsUser(true);
+      setToken(token as string);
+    } else {
+      setIsUser(false);
+    }
+  };
+  useEffect(() => {
+    checkAuth();
+  }, [isUser]);
 
   const state = {
     userLogin: { isUser, setIsUser },
     clickButton: { loginButton, setLoginButton },
-    sign: { signIn, signUp },
+    sign: { signIn, signUp, logout },
     data: { userInfo, setUserInfo },
+    errorMsg: { errorMessage, setErrorMessage },
   };
   return <Auth.Provider value={state}>{children}</Auth.Provider>;
 };

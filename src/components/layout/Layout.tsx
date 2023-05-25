@@ -1,10 +1,15 @@
 import { ReactNode } from "react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { useLoading } from "@/context";
+import { useAuthContext, useLoading } from "@/context";
+import dynamic from "next/dynamic";
+
+const Login = dynamic(() => import("../login/Login").then((module) => module.Login));
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   const { loading } = useLoading() as { loading: boolean };
+  const { clickButton } = useAuthContext();
+  const { loginButton } = clickButton;
   return (
     <>
       {loading && (
@@ -31,6 +36,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         </div>
       )}
       <Navbar />
+      {loginButton && <Login />}
       {children}
       <Footer />
     </>

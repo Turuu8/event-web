@@ -60,9 +60,16 @@ export const SIGN_UP = gql`
   mutation Mutation($user: addUserInput!) {
     signup(user: $user) {
       token
+      user {
+        _id
+        firstName
+        lastName
+        email
+      }
     }
   }
 `;
+
 
 export const GET_FAVORITES = gql`
   query GetUser {
@@ -139,7 +146,6 @@ export const GET_CATEGORY = gql`
         country {
           name
         }
-        id
       }
     }
   }
@@ -164,6 +170,16 @@ export const GET_EVENT = gql`
   }
 `;
 
+export const TYPE_SEARCH = gql`
+query Event($arg: eventsQueryInput) {
+  events(arg: $arg) {
+    _id
+    title
+    thumbnail
+    startDate
+  }
+}
+`;
 export const GET_COMPANY = gql`
   query ($companyId: ID!) {
     company(id: $companyId) {
@@ -187,9 +203,14 @@ export const GET_COMPANIES = gql`
   query Companies {
     companies {
       name
-      id
       followers {
         _id
+        id
+      }
+      email
+       events {
+        _id
+        id
       }
     }
   }

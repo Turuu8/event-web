@@ -1,7 +1,7 @@
 import Select, { StylesConfig } from "react-select";
 import { BigEventCart, SpecialEventCart } from "../EventCart";
 import { specialEventCarts } from "@/utils";
-import { GET_CATEGORIES, GET_CATEGORY } from "@/graphql";
+import { GET_CATEGORIES, GET_CATEGORY, TYPE_SEARCH } from "@/graphql";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import Image from "next/image";
 import useDay from "../hook/useDay";
@@ -9,6 +9,7 @@ import { StartDateFun } from "@/utils/date";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { DETAIL_TYPE } from "@/types";
 import { useLoading } from "@/context";
+import { Special } from "./Special";
 
 const breakpoints = [640, 768, 1024];
 
@@ -18,6 +19,8 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
   const { tomorrow, today, lastDayOfThisWeek, lastDayOfThisMonth } = useDay();
   const [dayFilter, setDayFilter] = useState(0);
   const [dayFilterData, setDayFilterData] = useState([]);
+  const [input, setInput] = useState();
+  const [result, setResult] = useState();
 
   const { setLoading } = useLoading() as {
     setLoading: Dispatch<SetStateAction<boolean>>;
@@ -25,6 +28,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
 
   const { data, loading } = useQuery(GET_CATEGORIES);
   const [category] = useLazyQuery(GET_CATEGORY);
+  const [typeSearch, { refetch }] = useLazyQuery(TYPE_SEARCH);
 
   const categoriesArray: object[] = [];
   data?.categories?.map((el: { id: string; name: string }) => categoriesArray.push({ id: el.id, value: el.name, label: el.name }));
@@ -55,7 +59,6 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
           categoryid: id,
         },
         onCompleted: (data) => {
-          console.log(data);
           setDayFilterData(data.category.events);
           setDayFilter(data.category.events.length);
         },
@@ -85,7 +88,33 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
         return lastDayOfThisMonth;
     }
   };
-  console.log(dayFilterData);
+
+  // const { data: userSelectedDayEvents, refetch } = useQuery(TYPE_SEARCH, {
+  //   variables: { includes: input.target.value },
+  //   fetchPolicy: "no-cache",
+  // });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await typeSearch({
+          variables: {
+            arg: {
+              includes: input.target.value,
+            },
+          },
+          onCompleted: (data) => {
+            setDayFilterData(data.events);
+            setDayFilter(data.events.length);
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [input, setInput]);
+
+  console.log(result);
 
   return (
     <>
@@ -96,6 +125,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
             placeholder="Хайх"
             className="w-full bg-transparent focus:outline-none h-[33px] pl-[42px] rounded-[8px] border-[0.5px] text-[14px] border-[#C7C9CF] text-[#fff] placeholder-[#C7C9CF] md:h-[40px] md:text-[16px] 2xl:h-[60px] 2xl:text-[18px] 2xl:pl-[50px]"
             onClick={() => set(true)}
+            onChange={setInput}
             // onBlur={() => set(false)}
           />
           <Image
@@ -164,17 +194,17 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
               <>
                 <h1 className="pt-[55px] pb-[24px] font-[400] text-[14px] leading-[16px] text-[#C7C9CF]">{`${dayFilter} илэрц`}</h1>
                 <div className="grid grid-cols-2 grid-rows-2 gap-x-[16px] gap-y-[40px] md:gap-x-[18px] md:gap-y-[45px] lg:grid-cols-4 lg:grid-rows-1 lg:gap-[20px] 2xl:gap-[32px]">
-                  {dayFilterData?.map((el: DETAIL_TYPE) => {
-                    return <SpecialEventCart key={el.id} {...el} />;
+                  {dayFilterData?.map((el: DETAIL_TYPE, i: number) => {
+                    return <SpecialEventCart key={i} {...el} />;
                   })}
                 </div>
               </>
             ) : (
-              <></>
+              <div className="h-[60vh]"></div>
             )}
           </div>
 
-          <div className={`hidden lg:block ${dayFilterData ? " " : "h-[80vh]"}`}>
+          <div className={`hidden lg:block `}>
             <h1 className="text-[#fff] text-[24px] pb-[32px] pt-[80px]">Өдөр</h1>
             <div className="flexrow gap-[16px] pb-[80px] max-[1600px]:gap-[12px] max-[1600px]:pb-[60px]">
               {days.map((el, i) => {
@@ -194,10 +224,10 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
             </div>
             <h1 className="text-[#fff] text-[24px] pb-[32px] max-[1600px]:text-[18px] max-[1600px]:pb-[25px]">Категори</h1>
             <div className="flex flex-wrap gap-[16px] pb-[80px] max-[1600px]:gap-[12px]">
-              {data?.categories?.map((el: { id: string; name: string }) => {
+              {data?.categories?.map((el: { id: string; name: string }, i: number) => {
                 return (
                   <button
-                    key={el.id}
+                    key={i}
                     className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] duration-[0.3s] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px]`}
                     onClick={(e) => {
                       set(true);
@@ -217,14 +247,17 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
                 );
               })}
             </div>
-            {dayFilter >= 1 && (
+            {dayFilter >= 1 ? (
               <>
-                <div className="flexcol pt-[40px] gap-[50px] lg:pt-[60px] xl:gap-[60px] 2xl:pt-[75px] 2xl:gap-[80px]">
+                <div className="grid grid-cols-4 pt-[40px] gap-x-[20px] gap-y-[30px] lg:pt-[60px] xl:gap-[60px] 2xl:pt-[75px] 2xl:gap-[80px]">
                   {dayFilterData.map((el: DETAIL_TYPE, i: number) => {
-                    console.log(el.id);
-                    return <BigEventCart key={el.id} {...el} />;
+                    return <SpecialEventCart key={i} {...el} />;
                   })}
                 </div>
+              </>
+            ) : (
+              <>
+                <div className="h-[70vh]"></div>
               </>
             )}
           </div>
@@ -295,7 +328,4 @@ const days = [
 
 const countries = [{ value: "монгол", label: "монгол" }];
 
-const cities = [
-  { value: "дархан", label: "дархан" },
-  { value: "эрдэнэт", label: "эрдэнэт" },
-];
+const cities = [{ value: "улаанбаатар", label: "улаанбаатар" }];

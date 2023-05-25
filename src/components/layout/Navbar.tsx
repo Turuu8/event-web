@@ -8,7 +8,7 @@ export const Navbar = () => {
   const [show, setShow] = useState(false);
   const [navbar, setNavbar] = useState(false);
 
-  const { userLogin, clickButton, data } = useAuthContext();
+  const { userLogin, clickButton, data, sign, errorMsg } = useAuthContext();
   const { setSearch } = useLoading() as {
     setSearch: Dispatch<SetStateAction<boolean>>;
   };
@@ -16,6 +16,7 @@ export const Navbar = () => {
   const { isUser } = userLogin;
   const { setLoginButton } = clickButton;
   const { userInfo } = data;
+  const { logout } = sign;
 
   const router = useRouter();
 
@@ -77,7 +78,7 @@ export const Navbar = () => {
                     src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80"
                   />
                 </div>
-                <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo.email}</h2>
+                <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo?.firstName}</h2>
                 <Image
                   src="/otherIcons/navbar-arrowDown.svg"
                   width={30}
@@ -91,7 +92,6 @@ export const Navbar = () => {
               <>
                 <button
                   onClick={() => {
-                    setDropDown(false);
                     setLoginButton(true);
                   }}
                   className="hidden lg:block xl:text-[18px] 2xl:text-[21px]"
@@ -129,15 +129,9 @@ export const Navbar = () => {
           <>
             <div className="flexrow gap-[16px] items-center">
               <div className="w-[35px] h-[35px]">
-                <Image
-                  alt="profile imgage"
-                  width={40}
-                  height={40}
-                  className="w-full h-full rounded-[50%]"
-                  src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80"
-                />
+                <Image alt="profile imgage" width={40} height={40} className="w-full h-full rounded-[50%]" src="/otherIcons/userName.svg" />
               </div>
-              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo.email}</h2>
+              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo?.firstName}</h2>
             </div>
             {/* ___________ other buttoms ___________*/}
             <div className="flexcol pt-[55px] gap-[16px]">
@@ -150,12 +144,24 @@ export const Navbar = () => {
                   </div>
                 );
               })}
+              <div className="pt-[20px]">
+                <button
+                  className="flexrow items-center gap-[20px]"
+                  onClick={() => {
+                    logout();
+                    setDropDown(false);
+                  }}
+                >
+                  <Image alt="logout icon" width={30} height={30} src="/otherIcons/logout.svg" className="w-[30px] h-[30px]" />
+                  <h2 className="text-[18px] leading-[21px]">Гарах</h2>
+                </button>
+              </div>
             </div>
           </>
         ) : (
           <button
             onClick={() => {
-              setDropDown(false);
+              // setDropDown(false);
               setLoginButton(() => true);
             }}
           >
