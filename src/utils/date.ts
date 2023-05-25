@@ -11,15 +11,15 @@ export const UpcommingDate = (propsCon: DETAIL_TYPE) => {
   const thisMount = new Date(date).toISOString().slice(0, 10).split("-")[1];
   const sameMonth = propsCon?.filter((el: DETAIL_TYPE) => StartDateFun(el.startDate)[1] === thisMount);
 
-  const LowDays = (data) => {
-    let daysArr: string[] = [];
+  const LowDays = (data: any) => {
+    let daysArr: any[] = [];
     let newDate: string[] = [];
     data?.map((el: DETAIL_TYPE) => daysArr.push(StartDateFun(el.startDate)[2]));
     if (daysArr.length === 0) {
       return;
     }
-    let less: string = daysArr?.reduce((a, b) => Math.min(a, b));
-    data?.map((el) => {
+    let less : any = daysArr?.reduce((a, b) => Math.min(a, b));
+    data?.map((el : any) => {
       if (StartDateFun(el.startDate)[2] == less) {
         if (lowDays.length === 4) {
           return;
@@ -27,7 +27,7 @@ export const UpcommingDate = (propsCon: DETAIL_TYPE) => {
         lowDays.push(el);
       }
     });
-    lowDays.map((el) => newDate.push(data.filter((ele: DETAIL_TYPE) => ele.id !== el.id)));
+    lowDays.map((el : any) => newDate.push(data.filter((ele: any) => ele.id !== el.id)));
     if (lowDays.length === 4) {
       newDate = [];
       return;
