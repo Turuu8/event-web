@@ -15,6 +15,7 @@ export default function Home() {
     search: boolean;
     setSearch: Dispatch<SetStateAction<boolean>>;
   };
+  console.log();
 
   const { data, loading } = useQuery(GET_EVENTS) as { data: { events: DETAIL_TYPE }; loading: any };
   const { clickButton } = useAuthContext();

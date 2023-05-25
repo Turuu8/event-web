@@ -5,7 +5,7 @@ import { Layout } from "@/components";
 import "@/styles/globals.css";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: process.env.NEXT_PUBLIC_NAME,
   cache: new InMemoryCache(),
 });
 
