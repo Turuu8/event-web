@@ -31,7 +31,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
 
   const FilterDay = (day: string) => {
     let testData: never[] = [];
-    events?.map((el: DETAIL_TYPE) => {
+    events?.map((el: never) => {
       const thisMount = new Date(el.startDate).toISOString().slice(0, 10);
       if (day >= thisMount) {
         return testData.push(el);
