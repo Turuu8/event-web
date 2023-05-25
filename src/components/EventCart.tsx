@@ -37,13 +37,13 @@ export const BigEventCart = (props: DETAIL_TYPE) => {
 
   return (
     <div className="flexcol font-[300] text-[#fff] gap-[24px] lg:flexrow lg:gap-[16px] xl:gap-[24px] 2xl:gap-[32px]">
-      <div className="relative w-full h-[350px] min-[500px]:h-[470px] sm:h-[540px] md:h-[600px] lg:w-[36.2%] lg:h-[385px] xl:h-[600px] xl:w-[41%] 2xl:h-[800px] ">
+      <div className="relative w-full h-[350px] min-[500px]:h-[470px] sm:h-[540px] md:h-[600px] lg:w-[36.2%] lg:h-[385px] xl:h-[600px] xl:w-[41%] xl:min-w-[41%] 2xl:h-[800px] ">
         <Image
           width={1000}
           height={1000}
           alt="special events"
           src={props?.thumbnail}
-          className="w-full h-full rounded-[8px] cursor-pointer"
+          className="w-full h-full rounded-[8px] cursor-pointer object-cover"
           onClick={() => router.push(`/event/${props.id}`)}
         />
         <div className="flexcol justify-center text-center absolute right-[20px] top-[20px] gap-[2px] rounded-[8px] py-[3px] px-[10px] bg-[#fff] md:right-[25px] md:top-[25px] xl:p-[10px_15px] xl:right-[30px] xl:top-[30px] 2xl:p-[6px_14px]  2xl:right-[40px] 2xl:top-[40px]">

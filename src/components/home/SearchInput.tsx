@@ -1,19 +1,76 @@
 import Select, { StylesConfig } from "react-select";
-import { SpecialEventCart } from "../EventCart";
+import { BigEventCart, SpecialEventCart } from "../EventCart";
 import { specialEventCarts } from "@/utils";
-import { GET_CATEGORIES } from "@/graphql";
-import { useQuery } from "@apollo/client";
+import { GET_CATEGORIES, GET_CATEGORY } from "@/graphql";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import Image from "next/image";
+import useDay from "../hook/useDay";
+import { StartDateFun } from "@/utils/date";
+import { useEffect, useState } from "react";
+import { DETAIL_TYPE } from "@/types";
 
 const breakpoints = [640, 768, 1024];
 
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
-export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
+export const SearchInput = ({ set, search, events }: { set: any; search: boolean }) => {
+  const { tomorrow, today, lastDayOfThisWeek, lastDayOfThisMonth } = useDay();
+  const [dayFilter, setDayFilter] = useState(0);
+  const [dayFilterData, setDayFilterData] = useState([]);
+
   const { data, loading } = useQuery(GET_CATEGORIES);
+  const [category] = useLazyQuery(GET_CATEGORY);
 
   const categoriesArray: object[] = [];
   data?.categories?.map((el: { id: string; name: string }) => categoriesArray.push({ value: el.name, label: el.name }));
+  events?.map((el: DETAIL_TYPE) => {
+    const thisMount = new Date(el.startDate).toISOString().slice(0, 10);
+    if (lastDayOfThisMonth >= thisMount) {
+    }
+  });
+
+  const FilterDay = (day: string) => {
+    let testData: object[] = [];
+    events?.map((el: DETAIL_TYPE) => {
+      const thisMount = new Date(el.startDate).toISOString().slice(0, 10);
+      if (day >= thisMount) {
+        return testData.push(el);
+      }
+    });
+    setDayFilterData(testData);
+    setDayFilter(testData.length);
+  };
+  const FilterCategory = async (id: string) => {
+    try {
+      await category({
+        variables: {
+          categoryid: id,
+        },
+        onCompleted: (data) => {
+          console.log(data);
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleChange = (e: any) => {
+    switch (e.value) {
+      case "Өнөөдөр":
+        FilterDay(today);
+        return today;
+      case "Маргааш":
+        FilterDay(tomorrow);
+        return tomorrow;
+      case "Энэ долоо хоногт":
+        FilterDay(lastDayOfThisWeek);
+        return lastDayOfThisWeek;
+      case "Энэ сард":
+        FilterDay(lastDayOfThisMonth);
+        return lastDayOfThisMonth;
+    }
+  };
 
   return (
     <>
@@ -46,6 +103,7 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
                     defaultValue={days[0]}
                     options={days}
                     styles={colourStyles}
+                    onChange={handleChange}
                     components={{
                       IndicatorSeparator: () => null,
                     }}
@@ -56,6 +114,7 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
                     defaultValue={categoriesArray[0]}
                     options={categoriesArray}
                     styles={colourStyles}
+                    onChange={handleChange}
                     components={{
                       IndicatorSeparator: () => null,
                     }}
@@ -66,6 +125,7 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
                     defaultValue={countries[0]}
                     options={countries}
                     styles={colourStyles}
+                    onChange={handleChange}
                     components={{
                       IndicatorSeparator: () => null,
                     }}
@@ -76,6 +136,7 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
                     defaultValue={cities[0]}
                     options={cities}
                     styles={colourStyles}
+                    onChange={handleChange}
                     components={{
                       IndicatorSeparator: () => null,
                     }}
@@ -84,30 +145,39 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
               )}
             </div>
             {/* search result */}
-            <h1 className="pt-[55px] pb-[24px] font-[400] text-[14px] leading-[16px] text-[#C7C9CF]">{`4 илэрц`}</h1>
-            <div className="grid grid-cols-2 grid-rows-2 gap-x-[16px] gap-y-[40px] md:gap-x-[18px] md:gap-y-[45px] lg:grid-cols-4 lg:grid-rows-1 lg:gap-[20px] 2xl:gap-[32px]">
-              {/* {specialEventCarts.map((el, i) => {
-                return <SpecialEventCart key={i} {...el} />;
-              })} */}
-            </div>
+            {dayFilter >= 1 ? (
+              <>
+                <h1 className="pt-[55px] pb-[24px] font-[400] text-[14px] leading-[16px] text-[#C7C9CF]">{`${dayFilter} илэрц`}</h1>
+                <div className="grid grid-cols-2 grid-rows-2 gap-x-[16px] gap-y-[40px] md:gap-x-[18px] md:gap-y-[45px] lg:grid-cols-4 lg:grid-rows-1 lg:gap-[20px] 2xl:gap-[32px]">
+                  {dayFilterData?.map((el: DETAIL_TYPE) => {
+                    return <SpecialEventCart key={el.id} {...el} />;
+                  })}
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
 
-          <div className="hidden lg:block h-[80vh]">
+          <div className={`hidden lg:block ${dayFilterData ? " " : "h-[80vh]"}`}>
             <h1 className="text-[#fff] text-[24px] pb-[32px] pt-[80px]">Өдөр</h1>
             <div className="flexrow gap-[16px] pb-[80px] max-[1600px]:gap-[12px] max-[1600px]:pb-[60px]">
-              {["Өнөөдөр", "Маргааш", "Энэ долоо хоногт", "Энэ сард"].map((el, i) => {
+              {days.map((el, i) => {
                 return (
                   <button
                     key={i}
-                    className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] focus:bg-[#D22366] focus:text-[#FFF] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px]`}
-                    onClick={() => {}}
+                    className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px] focus:bg-[#D22366] focus:text-[#fff]`}
+                    onClick={(e) => {
+                      handleChange(e.target);
+                    }}
+                    value={el.value}
                   >
-                    <p>{el}</p>
+                    {el.value}
                   </button>
                 );
               })}
             </div>
-            <h1 className="text-[#fff] text-[24px] pb-[32px] max-[1600px]:text-[18px] max-[1600px]:pb-[25px]">Катигори</h1>
+            <h1 className="text-[#fff] text-[24px] pb-[32px] max-[1600px]:text-[18px] max-[1600px]:pb-[25px]">Категори</h1>
             <div className="flex flex-wrap gap-[16px] pb-[80px] max-[1600px]:gap-[12px]">
               {data?.categories?.map((el: { id: string; name: string }) => {
                 return (
@@ -116,15 +186,31 @@ export const SearchInput = ({ set, search }: { set: any; search: boolean }) => {
                     className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px]`}
                     onClick={(e) => {
                       set(true);
-                      e.currentTarget.style.background = "#D22366";
-                      e.currentTarget.style.color = "#fff";
+                      if (e.currentTarget.style.background == "") {
+                        e.currentTarget.style.background = "#D22366";
+                        e.currentTarget.style.color = "#fff";
+                      } else {
+                        e.currentTarget.style.background = "";
+                        e.currentTarget.style.color = "";
+                      }
+                      // (async () => {})
+                      FilterCategory(el.id);
                     }}
                   >
-                    <p>{el.name}</p>
+                    {el.name}
                   </button>
                 );
               })}
             </div>
+            {dayFilter >= 1 && (
+              <>
+                <div className="flexcol pt-[40px] gap-[50px] lg:pt-[60px] xl:gap-[60px] 2xl:pt-[75px] 2xl:gap-[80px]">
+                  {dayFilterData.map((el: DETAIL_TYPE) => {
+                    return <BigEventCart key={el.id} {...el} />;
+                  })}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -191,7 +277,7 @@ const days = [
   { value: "Энэ сард", label: "Энэ сард" },
 ];
 
-const countries = [{ value: "улаабаатар, монгол", label: "улаабаатар, монгол" }];
+const countries = [{ value: "монгол", label: "монгол" }];
 
 const cities = [
   { value: "дархан", label: "дархан" },

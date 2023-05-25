@@ -117,6 +117,26 @@ export const GET_EVENTS = gql`
     }
   }
 `;
+export const GET_CATEGORY = gql`
+  query Category($categoryid: ID) {
+    category(categoryid: $categoryid) {
+      name
+      events {
+        title
+        ticketcount
+        thumbnail
+        startDate
+        rating
+        price
+        location
+        _id
+        expirationdate
+        endDate
+        about
+      }
+    }
+  }
+`;
 
 export const GET_EVENT = gql`
   query Event($eventId: ID!) {

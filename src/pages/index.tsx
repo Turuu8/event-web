@@ -25,9 +25,13 @@ export default function Home() {
 
   if (data) {
     specialData = UpcommingDate(data.events);
-    specialData.map((el) => (offerYou = data.events.filter((ele) => ele.id !== el.id)));
+    // data.events.map((el) => {
+    //   const eve = specialData.filter((ele) => {
+    //     ele.id === el.id;
+    //   });
+    //   console.log(eve);
+    // });
   }
-  console.log(offerYou);
 
   LoadingFun(loading);
   return (
@@ -40,14 +44,14 @@ export default function Home() {
           }`}
         />
         <div className="pt-[95px] max-w-[1920px] w-full m-auto px-[32px] lg:p-[130px_45px_0] 2xl:p-[165px_60px_0]">
-          <SearchInput set={setSearch} search={search} />
-          <Special search={search} data={specialData} />
+          <SearchInput set={setSearch} search={search} events={data?.events} />
+          {/* <Special search={search} data={specialData} /> */}
           <div className={`pt-[70px] duration-[0.3s] lg:pt-[100px] 2xl:pt-[130px] ${search ? "hidden" : ""}`}>
             <h1 className="uppercase w-full text-[18px] leading-[21px] font-[400] text-[#D22366] md:text-[20px] md:leading-[23px] lg:text-[24px] lg:leading-[29px] 2xl:text-[32px] 2xl:leading-[38px]">
               Таньд санал болгох
             </h1>
             <div className="flexcol pt-[40px] gap-[50px] lg:pt-[60px] xl:gap-[60px] 2xl:pt-[75px] 2xl:gap-[80px]">
-              {offerYou?.map((el: JSX.IntrinsicAttributes & DETAIL_TYPE) => {
+              {data?.events?.map((el: JSX.IntrinsicAttributes & DETAIL_TYPE) => {
                 return <BigEventCart key={el.id} {...el} />;
               })}
             </div>
