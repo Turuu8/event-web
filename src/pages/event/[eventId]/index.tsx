@@ -44,20 +44,11 @@ const EventDeatil = () => {
                 <div className="flexcol gap-[50px] lg:flexrow lg:ml-[25%] lg:gap-[24px]">
                   <div className="flexcol items-center m-auto w-[160px] sm:w-[260px] lg:w-[323px] lg:m-0 xl:w-[330px]">
                     <div className="w-full h-[190px] sm:h-[290px] lg:h-[432px] xl:h-[420px]">
-                      <Image
-                        alt="poster image"
-                        width={1000}
-                        height={1000}
-                        className="w-full h-full rounded-[8px] object-cover"
-                        src={detail[0]?.thumbnail}
-                      />
+                      <Image alt="poster image" width={1000} height={1000} className="w-full h-full rounded-[8px]" src={detail[0]?.thumbnail} />
                     </div>
                     {/* save and ticket buttoms */}
-                    <div className="text-center flexcol items-center w-full pt-[12px] lg:pt-[26px]">
-                      <p className="capitalize text-[12px] leading-[14px] pb-[6px] text-[#C7C9CF] sm:text-[14px] sm:leading-[16px] lg:text-[16px] lg:leading-[19px] lg:pb-[12px]">
-                        {detail[0]?.city?.name}, {detail[0]?.country?.name}
-                      </p>
-                      <h1 className="font-[400] text-[14px] leading-[16px] pb-[20px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px] lg:pb-[30px]">
+                    <div className="text-center flexcol items-center w-full pt-[12px] lg:pt-[26px] xl:pt-[35px]">
+                      <h1 className="font-[400] text-[14px] leading-[16px] pb-[20px] sm:text-[16px] sm:leading-[19px] lg:text-[18px] lg:leading-[21px] lg:pb-[25px]">
                         {detail[0]?.title}
                       </h1>
                       <div className="flex justify-between w-full gap-[10px] lg:gap-[20px]">
@@ -81,8 +72,9 @@ const EventDeatil = () => {
                   </div>
                   {/* datail text */}
                   <div className="flexcol gap-[8px] text-[12px] leading-[14px] font-[400] sm:text-[14px] sm:leading-[16px] lg:gap-[16px]">
-                    <h1>ҮНЭ - {detail[0]?.price}</h1>
-                    <h1>{detail[0]?.startDate}</h1>
+                    <h1 className="text-[14px] font-[500] pb-[5px] md:text-[16px] xl:text-[18px]">Эвэнтийн мэдээлэл :</h1>
+                    <h1>Tасалбар : {detail[0]?.price}</h1>
+                    <h1>Цаг : 7:00 PM - 10:30 PM</h1>
                     <h1>
                       {detail[0]?.city?.name} , {detail[0]?.country?.name}
                     </h1>

@@ -6,8 +6,9 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import Image from "next/image";
 import useDay from "../hook/useDay";
 import { StartDateFun } from "@/utils/date";
-import { SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { DETAIL_TYPE } from "@/types";
+import { useLoading } from "@/context";
 
 const breakpoints = [640, 768, 1024];
 
@@ -18,11 +19,15 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
   const [dayFilter, setDayFilter] = useState(0);
   const [dayFilterData, setDayFilterData] = useState([]);
 
+  const { setLoading } = useLoading() as {
+    setLoading: Dispatch<SetStateAction<boolean>>;
+  };
+
   const { data, loading } = useQuery(GET_CATEGORIES);
   const [category] = useLazyQuery(GET_CATEGORY);
 
   const categoriesArray: object[] = [];
-  data?.categories?.map((el: { id: string; name: string }) => categoriesArray.push({ value: el.name, label: el.name }));
+  data?.categories?.map((el: { id: string; name: string }) => categoriesArray.push({ id: el.id, value: el.name, label: el.name }));
   events?.map((el: DETAIL_TYPE) => {
     const thisMount = new Date(el.startDate).toISOString().slice(0, 10);
     if (lastDayOfThisMonth >= thisMount) {
@@ -39,6 +44,9 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
     });
     setDayFilterData(testData);
     setDayFilter(testData.length);
+    setInterval(() => {
+      setLoading(false);
+    }, 1000);
   };
   const FilterCategory = async (id: string) => {
     try {
@@ -48,6 +56,8 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
         },
         onCompleted: (data) => {
           console.log(data);
+          setDayFilterData(data.category.events);
+          setDayFilter(data.category.events.length);
         },
       });
     } catch (err) {
@@ -58,19 +68,24 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
   const handleChange = (e: any) => {
     switch (e.value) {
       case "Өнөөдөр":
+        setLoading(true);
         FilterDay(today);
         return today;
       case "Маргааш":
+        setLoading(true);
         FilterDay(tomorrow);
         return tomorrow;
       case "Энэ долоо хоногт":
+        setLoading(true);
         FilterDay(lastDayOfThisWeek);
         return lastDayOfThisWeek;
       case "Энэ сард":
+        setLoading(true);
         FilterDay(lastDayOfThisMonth);
         return lastDayOfThisMonth;
     }
   };
+  console.log(dayFilterData);
 
   return (
     <>
@@ -92,7 +107,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
           />
         </div>
         {/* ----------------------------------------------------- */}
-        <div className={`w-full pt-[24px] font-['Inter'] font-[300] ${search ? "" : " hidden"}`}>
+        <div className={`w-full pt-[24px] font-['Inter'] font-[300]   ${search ? "" : " hidden"}`}>
           <div className="lg:hidden">
             <div className="grid grid-cols-2 grid-rows-2 gap-[10px]">
               {!loading && (
@@ -114,7 +129,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
                     defaultValue={categoriesArray[0]}
                     options={categoriesArray}
                     styles={colourStyles}
-                    onChange={handleChange}
+                    onChange={(e: any) => FilterCategory(e.id)}
                     components={{
                       IndicatorSeparator: () => null,
                     }}
@@ -166,7 +181,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
                 return (
                   <button
                     key={i}
-                    className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px] focus:bg-[#D22366] focus:text-[#fff]`}
+                    className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] duration-[0.3s] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px] focus:bg-[#D22366] focus:text-[#fff]`}
                     onClick={(e) => {
                       handleChange(e.target);
                     }}
@@ -183,7 +198,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
                 return (
                   <button
                     key={el.id}
-                    className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px]`}
+                    className={`capitalize text-[#686873] text-[18px] bg-[#12121F] rounded-[8px] px-[24px] py-[12px] duration-[0.3s] max-[1600px]:text-[13px] max-[1600px]:p-[8px_18px]`}
                     onClick={(e) => {
                       set(true);
                       if (e.currentTarget.style.background == "") {
@@ -205,7 +220,8 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
             {dayFilter >= 1 && (
               <>
                 <div className="flexcol pt-[40px] gap-[50px] lg:pt-[60px] xl:gap-[60px] 2xl:pt-[75px] 2xl:gap-[80px]">
-                  {dayFilterData.map((el: DETAIL_TYPE) => {
+                  {dayFilterData.map((el: DETAIL_TYPE, i: number) => {
+                    console.log(el.id);
                     return <BigEventCart key={el.id} {...el} />;
                   })}
                 </div>

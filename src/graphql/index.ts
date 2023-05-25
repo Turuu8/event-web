@@ -133,6 +133,13 @@ export const GET_CATEGORY = gql`
         expirationdate
         endDate
         about
+        city {
+          name
+        }
+        country {
+          name
+        }
+        id
       }
     }
   }
