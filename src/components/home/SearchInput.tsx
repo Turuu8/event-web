@@ -6,7 +6,7 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import Image from "next/image";
 import useDay from "../hook/useDay";
 import { StartDateFun } from "@/utils/date";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { DETAIL_TYPE } from "@/types";
 
 const breakpoints = [640, 768, 1024];
@@ -30,8 +30,8 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
   });
 
   const FilterDay = (day: string) => {
-    let testData: never[] = [];
-    events?.map((el: never) => {
+    let testData: any = [];
+    events?.map((el: { startDate: never }) => {
       const thisMount = new Date(el.startDate).toISOString().slice(0, 10);
       if (day >= thisMount) {
         return testData.push(el);
