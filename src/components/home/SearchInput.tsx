@@ -19,7 +19,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
   const { tomorrow, today, lastDayOfThisWeek, lastDayOfThisMonth } = useDay();
   const [dayFilter, setDayFilter] = useState(0);
   const [dayFilterData, setDayFilterData] = useState([]);
-  const [input, setInput] = useState();
+  const [input, setInput] = useState("");
   const [result, setResult] = useState();
 
   const { setLoading } = useLoading() as {
