@@ -70,13 +70,7 @@ export const Navbar = () => {
             {isUser ? (
               <button onClick={() => setDropDown(true)} className="gap-[16px] items-center hidden lg:flexrow">
                 <div className="w-[35px] h-[35px]">
-                  <Image
-                    alt="profile imgage"
-                    width={40}
-                    height={40}
-                    className="w-full h-full rounded-[50%]"
-                    src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2334&q=80"
-                  />
+                  <Image alt="profile imgage" width={40} height={40} className="w-full h-full rounded-[50%]" src="/otherIcons/userName.svg" />
                 </div>
                 <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo?.firstName}</h2>
                 <Image
@@ -104,10 +98,12 @@ export const Navbar = () => {
         </div>
       </header>
       <div
-        className={`fixed z-10 w-[100vw] h-[100vh] duration-[0.5s] translate-y-[-100%] px-[32px] bg-[#0A000B] ${dropDown && "translate-y-[0px] "}`}
+        className={`fixed z-10 w-[100vw] h-[100vh] duration-[0.5s] translate-y-[-100%] px-[32px] bg-[#0A000B] ${
+          dropDown && "translate-y-[0px] "
+        }  lg:w-[310px] lg:h-[370px] lg:right-0 lg:rounded-bl-[8px] lg:pr-[16px] min-[2140px]:right-[5%] min-[2380px]:right-[10%] min-[2690px]:right-[15%]`}
       >
         {/* ___________ close navbar ___________*/}
-        <div className="h-[70px] flex justify-end w-full items-center">
+        <div className="h-[70px] flex justify-end w-full items-center lg:h-[50px]">
           <button
             className="flex items-center gap-[10px] justify-center"
             onClick={() => {
@@ -127,24 +123,24 @@ export const Navbar = () => {
         {/* ___________ name and profile image ___________*/}
         {isUser ? (
           <>
-            <div className="flexrow gap-[16px] items-center">
-              <div className="w-[35px] h-[35px]">
+            <div className="flexrow gap-[16px] items-center lg:gap-[10px]">
+              <div className="w-[35px] h-[35px] lg:w-[30px] lg:h-[30px]">
                 <Image alt="profile imgage" width={40} height={40} className="w-full h-full rounded-[50%]" src="/otherIcons/userName.svg" />
               </div>
-              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px]">{userInfo?.firstName}</h2>
+              <h2 className="font-['Inter'] font-[300] text-[18px] leading-[21px] lg:text-[16px] lg:leading-[19px]">{userInfo?.firstName}</h2>
             </div>
             {/* ___________ other buttoms ___________*/}
-            <div className="flexcol pt-[55px] gap-[16px]">
-              {["Хадгалсан", "Тасалбар", "Календар", "Тохиргоо", "Эвэнт үүсгэх"].map((el, i) => {
+            <div className="flexcol pt-[55px] gap-[16px] lg:pt-[30px] ">
+              {list.map((el, i) => {
                 return (
                   <div key={i}>
-                    <button className={``} onClick={() => console.log(el)}>
-                      <h2 className="text-[18px] leading-[21px]">{el}</h2>
+                    <button className={``} onClick={() => router.push(el.path)}>
+                      <h2 className="text-[18px] leading-[21px] lg:text-[16px] lg:leading-[19px]">{el.title}</h2>
                     </button>
                   </div>
                 );
               })}
-              <div className="pt-[20px]">
+              <div className="pt-[20px] lg:pt-[10px]">
                 <button
                   className="flexrow items-center gap-[20px]"
                   onClick={() => {
@@ -152,8 +148,14 @@ export const Navbar = () => {
                     setDropDown(false);
                   }}
                 >
-                  <Image alt="logout icon" width={30} height={30} src="/otherIcons/logout.svg" className="w-[30px] h-[30px]" />
-                  <h2 className="text-[18px] leading-[21px]">Гарах</h2>
+                  <Image
+                    alt="logout icon"
+                    width={30}
+                    height={30}
+                    src="/otherIcons/logout.svg"
+                    className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
+                  />
+                  <h2 className="text-[18px] leading-[21px] lg:text-[16px] lg:leading-[19px]">Гарах</h2>
                 </button>
               </div>
             </div>
@@ -172,3 +174,11 @@ export const Navbar = () => {
     </>
   );
 };
+
+const list = [
+  { path: "/", title: "Хадгалсан" },
+  { path: "/", title: "Тасалбар" },
+  { path: "/", title: "Календар" },
+  { path: "/", title: "Тохиргоо" },
+  { path: "/", title: "Эвэнт үүсгэх" },
+];

@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signUp = async (email: string, firstName: string, lastName: string, password: string) => {
-    console.log(email, firstName, lastName, password);
     try {
       await signupGQL({
         variables: {
