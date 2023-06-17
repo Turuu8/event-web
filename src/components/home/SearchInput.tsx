@@ -64,8 +64,8 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
           setDayFilter(data.category.events.length);
         },
       });
-    } catch (err) {
-      console.log(err);
+    } catch (errors) {
+      console.log(errors);
     }
   };
 
@@ -154,7 +154,7 @@ export const SearchInput = ({ set, search, events }: { set: any; search: boolean
           />
         </div>
         {/* ----------------------------------------------------- */}
-        <div className={`w-full pt-[24px] font-['Inter'] font-[300]   ${search ? "" : " hidden"}`}>
+        <div className={`w-full pt-[24px] font-['Inter'] font-[300]   ${search ? "" : "hidden"}`}>
           <div className="lg:hidden">
             <div className="grid grid-cols-2 grid-rows-2 gap-[10px]">
               {!loading && (

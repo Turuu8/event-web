@@ -15,22 +15,7 @@ export default function Home() {
     setLoading: Dispatch<SetStateAction<boolean>>;
   };
 
-  console.log();
-
   const { data } = useQuery(GET_EVENTS) as { data: { events: DETAIL_TYPE }; loading: any };
-
-  let specialData = null;
-  let offerYou = [];
-
-  if (data) {
-    specialData = UpcommingDate(data.events);
-    // data.events.map((el) => {
-    //   const eve = specialData.filter((ele) => {
-    //     ele.id === el.id;
-    //   });
-    //   console.log(eve);
-    // });
-  }
 
   return (
     <>
